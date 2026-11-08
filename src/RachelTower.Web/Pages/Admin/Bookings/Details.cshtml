@@ -1,0 +1,72 @@
+@page "/admin/bookings/{id:int}"
+@model RachelTower.Web.Pages.Admin.Bookings.DetailsModel
+@{
+    var b = Model.Booking;
+    ViewData["Title"] = b.Reference;
+    var ci = CultureInfo.CurrentCulture;
+    var culture = SiteCultures.Current;
+    var actions = new List<(string Handler, string Label, bool Primary)>();
+    if (b.Status == BookingStatus.Confirmed || b.Status == BookingStatus.NoShow) actions.Add(("CheckIn", L["Admin.Action.CheckIn"], true));
+    if (b.Status == BookingStatus.CheckedIn) actions.Add(("CheckOut", L["Admin.Action.CheckOut"], true));
+    if (b.PaymentStatus == PaymentStatus.Unpaid && b.Status is BookingStatus.Confirmed or BookingStatus.CheckedIn or BookingStatus.CheckedOut) actions.Add(("MarkPaid", L["Admin.Action.MarkPaid"], b.Status != BookingStatus.Confirmed));
+    if (b.Status == BookingStatus.Confirmed) actions.Add(("NoShow", L["Admin.Action.NoShow"], false));
+    if (b.Status is BookingStatus.Confirmed or BookingStatus.PendingPayment) actions.Add(("Cancel", L["Admin.Action.Cancel"], false));
+}
+
+<a href="/admin/bookings" class="link-arrow">← @L["Admin.Back"]</a>
+
+<div class="mt-4 flex flex-wrap items-center gap-4">
+    <h1 class="font-mono text-4xl font-semibold">@b.Reference</h1>
+    <span class="rounded-full px-3 py-1 text-sm font-medium ring-1 @AdminUi.StatusClass(b.Status)">@L[$"Status.{b.Status}"]</span>
+</div>
+<p class="mt-1 text-sm text-ink/60">@string.Format(L["Admin.Booking.Created"], Clock.ToLocal(b.CreatedAt).ToString("g", ci), L[$"Source.{b.Source}"])</p>
+
+@if (actions.Count > 0)
+{
+    <div class="mt-6 flex flex-wrap gap-2">
+        @foreach (var a in actions)
+        {
+            <form method="post" asp-page-handler="@a.Handler" onsubmit="@(a.Primary ? null : $"return confirm('{L["Admin.ConfirmAction"].Value.Replace("'", "\\'")}')")">
+                <button type="submit" class="@(a.Primary ? "btn-primary" : "btn-outline") py-2.5">@a.Label</button>
+            </form>
+        }
+    </div>
+}
+
+<div class="mt-8 grid gap-6 lg:grid-cols-2">
+    <section class="rounded bg-white p-6 shadow-sm ring-1 ring-stone-200">
+        <h2 class="font-semibold">@L["Booking.Guest"]</h2>
+        <dl class="mt-4 space-y-2 text-sm">
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Booking.Guest"]</dt><dd class="font-medium">@b.GuestName</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Booking.Phone"]</dt><dd><a class="link-plain" href="@HotelOptions.TelUrl(b.GuestPhone)">@b.GuestPhone</a> · <a class="link-plain" href="https://wa.me/@(new string(b.GuestPhone.Where(char.IsDigit).ToArray()))" target="_blank" rel="noopener">WhatsApp</a></dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Booking.Email"]</dt><dd>@if (b.GuestEmail is not null) { <a class="link-plain" href="mailto:@b.GuestEmail">@b.GuestEmail</a> } else { <span>-</span> }</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Book.Guests"]</dt><dd>@b.Guests</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Admin.Booking.Language"]</dt><dd class="uppercase">@b.Culture</dd></div>
+        </dl>
+        <p class="mt-5 text-sm"><a class="link-plain" href="@Model.GuestLink" target="_blank" rel="noopener">@L["Admin.Booking.GuestLink"]</a></p>
+    </section>
+
+    <section class="rounded bg-white p-6 shadow-sm ring-1 ring-stone-200">
+        <h2 class="font-semibold">@L["Booking.RoomType"]</h2>
+        <dl class="mt-4 space-y-2 text-sm">
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Booking.RoomType"]</dt><dd class="font-medium">@b.RoomType.Name(culture) · @b.Room.Number</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Book.CheckIn"]</dt><dd>@b.CheckIn.ToString("D", ci)</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Book.CheckOut"]</dt><dd>@b.CheckOut.ToString("D", ci)</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Booking.Nights"]</dt><dd>@b.Nights</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Booking.Payment"]</dt><dd>@L[$"Payment.{b.PaymentMethod}"] · <span class="@(b.PaymentStatus == PaymentStatus.Unpaid ? "text-amber-700" : "text-emerald-700") font-medium">@L[$"PaymentStatus.{b.PaymentStatus}"]</span></dd></div>
+            <div class="flex justify-between gap-4 border-t border-stone-100 pt-2"><dt class="font-medium">@L["Booking.Total"]</dt><dd class="text-right"><span class="font-display text-2xl font-semibold">@Money.Usd(b.TotalUsd, ci)</span><span class="block text-xs text-ink/60">@string.Format(L["Admin.Booking.Rate"], Money.Usd(b.NightlyRateUsd, ci))</span></dd></div>
+        </dl>
+        @if (b.Status == BookingStatus.Confirmed && b.PaymentStatus == PaymentStatus.Unpaid && b.HoldExpiresAt is { } release)
+        {
+            <p class="mt-4 rounded bg-amber-50 p-3 text-sm text-amber-900">@string.Format(L["Admin.Booking.ReleaseAt"], Clock.ToLocal(release).ToString("g", ci))</p>
+        }
+    </section>
+
+    <section class="rounded bg-white p-6 shadow-sm ring-1 ring-stone-200 lg:col-span-2">
+        <h2 class="font-semibold">@L["Booking.Notes"]</h2>
+        <form method="post" asp-page-handler="Notes" class="mt-3">
+            <textarea name="notes" rows="3" class="form-input" maxlength="2000">@b.Notes</textarea>
+            <button type="submit" class="btn-outline mt-3 py-2">@L["Admin.Action.SaveNotes"]</button>
+        </form>
+    </section>
+</div>

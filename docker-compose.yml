@@ -1,0 +1,17 @@
+# Local PostgreSQL for development and tests.
+#   docker compose up -d
+# Matches the connection strings in appsettings.json and the test project.
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: rachel
+      POSTGRES_PASSWORD: rachel
+      POSTGRES_DB: racheltower
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

@@ -60,6 +60,9 @@ public static class SiteImages
         new("history-17", "f658ff418ff7449cb2b726765fd39a2e"),
     ];
 
+    /// <summary>Photo by key (e.g. a room type's ImageKey); the bedroom photo if the key is unknown.</summary>
+    public static SiteImage ByKey(string? key) => All.FirstOrDefault(i => i.Key == key) ?? Bedroom;
+
     public static IEnumerable<SiteImage> All =>
         new[] { Logo, Kolwezi }.Concat(Gallery).Concat(Construction).DistinctBy(i => i.Key);
 }

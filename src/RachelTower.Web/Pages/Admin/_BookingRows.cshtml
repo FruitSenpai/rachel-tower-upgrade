@@ -1,0 +1,38 @@
+@model (IReadOnlyList<Booking> Bookings, string? Action)
+@* Compact booking list for the dashboard, with one quick action button per row. *@
+@{
+    var ci = CultureInfo.CurrentCulture;
+    var returnUrl = Context.Request.Path.Value;
+}
+@if (Model.Bookings.Count == 0)
+{
+    <p class="px-5 py-6 text-sm text-ink/60">@L["Admin.None"]</p>
+}
+else
+{
+    <ul class="divide-y divide-stone-100">
+        @foreach (var b in Model.Bookings)
+        {
+            <li class="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3">
+                <span class="w-16 shrink-0 font-semibold">@b.Room.Number</span>
+                <a href="/admin/bookings/@b.Id" class="min-w-0 flex-1">
+                    <span class="block truncate font-medium hover:underline">@b.GuestName</span>
+                    <span class="block text-xs text-ink/60">@b.Reference · @AdminUi.Dates(b, ci) · @b.GuestPhone</span>
+                </a>
+                <span class="rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 @AdminUi.StatusClass(b.Status)">@L[$"Status.{b.Status}"]</span>
+                @if (b.PaymentStatus == PaymentStatus.Unpaid && b.IsActive)
+                {
+                    <span class="text-xs font-medium text-amber-700">@Money.Usd(b.TotalUsd, ci) · @L["PaymentStatus.Unpaid"]</span>
+                }
+                @if (Model.Action is "CheckIn" && b.Status == BookingStatus.Confirmed || Model.Action is "CheckOut" && b.Status == BookingStatus.CheckedIn)
+                {
+                    <form method="post" action="/admin/bookings/@b.Id?handler=@Model.Action">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="returnUrl" value="@returnUrl" />
+                        <button type="submit" class="rounded bg-ink px-3 py-1.5 text-xs font-medium text-white hover:bg-ink/85">@L[$"Admin.Action.{Model.Action}"]</button>
+                    </form>
+                }
+            </li>
+        }
+    </ul>
+}

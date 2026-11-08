@@ -1,0 +1,105 @@
+@page
+@model BookDetailsModel
+@using System.Globalization
+@using Microsoft.Extensions.Options
+@using RachelTower.Web.Reservations
+@inject HotelClock Clock
+@inject IOptions<BookingOptions> Rules
+@{
+    ViewData["Title"] = L["Details.Title"];
+    ViewData["Description"] = L["Book.MetaDescription"];
+    var culture = SiteCultures.Current;
+    var ci = CultureInfo.CurrentCulture;
+    var type = Model.Offer.RoomType;
+    var deadline = Clock.ToLocal(Model.CancellationDeadline).ToString("dddd d MMMM yyyy, HH:mm", ci);
+    var releaseHour = Rules.Value.ReleaseUnpaidAtHour;
+    var backUrl = Url.PageIn("/Book", values: new { checkIn = Model.CheckIn.ToString("yyyy-MM-dd"), checkOut = Model.CheckOut.ToString("yyyy-MM-dd"), guests = Model.Guests });
+}
+
+<section class="mx-auto max-w-7xl px-5 pb-20 pt-12 lg:px-8 lg:pt-16">
+    <a href="@backUrl" class="link-arrow">← @L["Details.Back"]</a>
+    <h1 class="mt-4 font-display text-4xl font-semibold sm:text-5xl">@L["Details.Heading"]</h1>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
+        <form method="post" class="space-y-8" novalidate>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <p class="rounded-sm border border-red-200 bg-red-50 p-3 text-sm text-red-900" role="alert">@L["Val.Summary"]</p>
+            }
+
+            <fieldset class="rounded-sm bg-white p-6 shadow-sm ring-1 ring-sand sm:p-8">
+                <legend class="sr-only">@L["Details.YourDetails"]</legend>
+                <h2 class="font-display text-2xl font-semibold">@L["Details.YourDetails"]</h2>
+                <div class="mt-6 grid gap-5 sm:grid-cols-2">
+                    <div class="sm:col-span-2">
+                        <label asp-for="Input.Name" class="form-label"></label>
+                        <input asp-for="Input.Name" class="form-input" autocomplete="name" required />
+                        <span asp-validation-for="Input.Name" class="form-error"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.Phone" class="form-label"></label>
+                        <input asp-for="Input.Phone" type="tel" class="form-input" autocomplete="tel" placeholder="+243 ..." required />
+                        <span asp-validation-for="Input.Phone" class="form-error"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.Email" class="form-label"></label>
+                        <input asp-for="Input.Email" type="email" class="form-input" autocomplete="email" />
+                        <span asp-validation-for="Input.Email" class="form-error"></span>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label asp-for="Input.Notes" class="form-label"></label>
+                        <textarea asp-for="Input.Notes" rows="3" class="form-input" placeholder="@L["Details.NotesHint"]"></textarea>
+                        <span asp-validation-for="Input.Notes" class="form-error"></span>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="rounded-sm bg-white p-6 shadow-sm ring-1 ring-sand sm:p-8">
+                <legend class="sr-only">@L["Details.PaymentTitle"]</legend>
+                <h2 class="font-display text-2xl font-semibold">@L["Details.PaymentTitle"]</h2>
+                <div class="mt-6 space-y-3">
+                    <label class="flex cursor-pointer gap-4 rounded-sm border-2 border-gold-500 bg-gold-100/40 p-4">
+                        <input type="radio" name="payment" value="desk" checked class="mt-1 accent-gold-600" />
+                        <span>
+                            <span class="block font-medium">@L["Payment.PayAtDesk"]</span>
+                            <span class="block text-sm text-ink/70">@L["Payment.PayAtDeskText"]</span>
+                        </span>
+                    </label>
+                    <label class="flex gap-4 rounded-sm border border-sand p-4 opacity-60">
+                        <input type="radio" name="payment" value="mobile" disabled class="mt-1" />
+                        <span>
+                            <span class="block font-medium">@L["Payment.MobileMoney"]</span>
+                            <span class="block text-sm text-ink/70">@L["Payment.MobileMoneyText"]</span>
+                        </span>
+                    </label>
+                </div>
+                <p class="mt-5 text-sm text-ink/70">
+                    @(releaseHour is { } h
+                        ? string.Format(L["Details.Policy"], deadline, $"{h}:00")
+                        : string.Format(L["Manage.CancelUntil"], deadline))
+                </p>
+            </fieldset>
+
+            <button type="submit" class="btn-primary w-full justify-center py-4 text-base sm:w-auto">@L["Details.Confirm"]</button>
+        </form>
+
+        <aside class="h-fit overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-sand lg:sticky lg:top-28">
+            <img src="@Images.Src(SiteImages.ByKey(type.ImageKey), 800)" alt="@type.Name(culture)" class="aspect-[16/9] w-full object-cover" />
+            <div class="p-6">
+                <h2 class="eyebrow text-gold-600">@L["Details.Summary"]</h2>
+                <p class="mt-2 font-display text-3xl font-semibold">@type.Name(culture)</p>
+                <dl class="mt-5 space-y-3 text-sm">
+                    <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Book.CheckIn"]</dt><dd class="text-right font-medium">@Model.CheckIn.ToString("D", ci)</dd></div>
+                    <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Book.CheckOut"]</dt><dd class="text-right font-medium">@Model.CheckOut.ToString("D", ci)</dd></div>
+                    <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Booking.Nights"]</dt><dd class="font-medium">@Model.Offer.Nights</dd></div>
+                    <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Book.Guests"]</dt><dd class="font-medium">@Model.Guests</dd></div>
+                    <div class="flex justify-between gap-4"><dt class="text-ink/60">@L["Book.PerNight"]</dt><dd class="font-medium">@Money.Usd(type.NightlyRateUsd, ci)</dd></div>
+                </dl>
+                <div class="mt-5 flex items-baseline justify-between border-t border-sand pt-5">
+                    <span class="font-medium">@L["Booking.Total"]</span>
+                    <span class="font-display text-3xl font-semibold">@Money.Usd(Model.Offer.TotalUsd, ci)</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>

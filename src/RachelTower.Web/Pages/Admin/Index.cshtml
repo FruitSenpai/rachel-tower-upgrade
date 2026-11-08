@@ -1,0 +1,44 @@
+@page "/admin"
+@model RachelTower.Web.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = L["Admin.Nav.Dashboard"];
+    var ci = CultureInfo.CurrentCulture;
+}
+
+<div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+        <p class="text-sm text-ink/60">@Model.Today.ToString("dddd d MMMM yyyy", ci)</p>
+        <h1 class="font-display text-4xl font-semibold">@L["Admin.Nav.Dashboard"]</h1>
+    </div>
+    <a href="/admin/bookings/new" class="btn-primary">@L["Admin.Nav.New"]</a>
+</div>
+
+<div class="mt-8 grid gap-4 sm:grid-cols-3">
+    <div class="rounded bg-white p-5 shadow-sm ring-1 ring-stone-200">
+        <p class="text-sm text-ink/60">@L["Admin.Occupancy"]</p>
+        <p class="mt-1 font-display text-4xl font-semibold">@Model.OccupiedTonight <span class="text-2xl text-ink/40">/ @Model.ActiveRooms</span></p>
+    </div>
+    <div class="rounded bg-white p-5 shadow-sm ring-1 ring-stone-200">
+        <p class="text-sm text-ink/60">@L["Admin.Arrivals"]</p>
+        <p class="mt-1 font-display text-4xl font-semibold">@Model.Arrivals.Count</p>
+    </div>
+    <div class="rounded bg-white p-5 shadow-sm ring-1 ring-stone-200">
+        <p class="text-sm text-ink/60">@L["Admin.Departures"]</p>
+        <p class="mt-1 font-display text-4xl font-semibold">@Model.Departures.Count</p>
+    </div>
+</div>
+
+<div class="mt-8 grid gap-6 lg:grid-cols-2">
+    <section class="rounded bg-white shadow-sm ring-1 ring-stone-200">
+        <h2 class="border-b border-stone-100 px-5 py-3 font-semibold">@L["Admin.Arrivals"]</h2>
+        <partial name="_BookingRows" model='((IReadOnlyList<Booking>)Model.Arrivals, (string?)"CheckIn")' />
+    </section>
+    <section class="rounded bg-white shadow-sm ring-1 ring-stone-200">
+        <h2 class="border-b border-stone-100 px-5 py-3 font-semibold">@L["Admin.Departures"]</h2>
+        <partial name="_BookingRows" model='((IReadOnlyList<Booking>)Model.Departures, (string?)"CheckOut")' />
+    </section>
+    <section class="rounded bg-white shadow-sm ring-1 ring-stone-200 lg:col-span-2">
+        <h2 class="border-b border-stone-100 px-5 py-3 font-semibold">@L["Admin.InHouse"]</h2>
+        <partial name="_BookingRows" model='((IReadOnlyList<Booking>)Model.InHouse, (string?)null)' />
+    </section>
+</div>
