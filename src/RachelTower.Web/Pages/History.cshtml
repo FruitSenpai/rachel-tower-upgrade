@@ -1,0 +1,35 @@
+@page
+@{
+    ViewData["Title"] = L["History.Title"];
+    ViewData["Description"] = L["History.MetaDescription"];
+    const int steps = 11; // History.1.* to History.11.* in the resource files
+    var photos = SiteImages.Construction
+        .Select((img, i) => new GalleryItem(img, string.Format(L["History.PhotoAlt"], i + 1)))
+        .ToList();
+}
+
+<partial name="_PageHeader" model='new PageHeaderModel(L["History.Eyebrow"], L["History.Heading"], SiteImages.Aerial)' />
+
+<section class="mx-auto max-w-4xl px-5 py-20 lg:py-24">
+    <p class="text-lg leading-relaxed text-ink/80">@L["History.Intro"]</p>
+
+    <ol class="timeline mt-14">
+        @for (var n = 1; n <= steps; n++)
+        {
+            <li class="timeline-item @(n == steps ? "is-last" : "")">
+                <p class="eyebrow text-gold-600">@L[$"History.{n}.Date"]</p>
+                <h2 class="mt-1 font-display text-2xl font-semibold sm:text-3xl">@L[$"History.{n}.Title"]</h2>
+                <p class="mt-2 leading-relaxed text-ink/80">@L[$"History.{n}.Body"]</p>
+            </li>
+        }
+    </ol>
+</section>
+
+<section class="bg-white py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <h2 class="section-title mb-10">@L["History.GalleryTitle"]</h2>
+        <partial name="_Gallery" model="photos" />
+    </div>
+</section>
+
+<partial name="_BookBand" />

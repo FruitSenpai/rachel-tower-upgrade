@@ -1,0 +1,65 @@
+@page
+@{
+    ViewData["Title"] = L["Amenities.Title"];
+    ViewData["Description"] = L["Amenities.MetaDescription"];
+    var services = new (string Key, SiteImage? Image)[]
+    {
+        ("Restaurant", SiteImages.Restaurant),
+        ("Fitness", SiteImages.Fitness),
+        ("Spa", null),
+        ("Service", SiteImages.Reception),
+    };
+    var roomFeatures = new[] { "Room.Bed", "Room.Desk", "Room.Safe", "Room.Tea", "Room.Tv", "Room.Shower" };
+}
+
+<partial name="_PageHeader" model='new PageHeaderModel(L["Amenities.Eyebrow"], L["Amenities.Heading"], SiteImages.EventHall)' />
+
+<section class="mx-auto max-w-4xl px-5 py-20 text-center lg:py-24">
+    <p class="text-xl leading-relaxed text-ink/80">@L["Amenities.Intro"]</p>
+</section>
+
+<section class="mx-auto grid max-w-7xl gap-6 px-5 pb-20 sm:grid-cols-2 lg:grid-cols-4 lg:px-8 lg:pb-28">
+    @foreach (var s in services)
+    {
+        <article class="flex flex-col overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-sand">
+            @if (s.Image is not null)
+            {
+                <img src="@Images.Src(s.Image, 700)" alt="@L[s.Image.AltKey]" loading="lazy" class="aspect-[4/3] w-full object-cover" />
+            }
+            else
+            {
+                <div class="flex aspect-[4/3] w-full items-center justify-center bg-gradient-to-br from-sand to-gold-100" aria-hidden="true">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="text-gold-600"><path d="M12 21c-4-2.5-7-6-7-10a7 7 0 0 1 14 0c0 4-3 7.5-7 10Z" /><path d="M12 21V11m0 0c-1.5-1.5-3.5-2-5-2m5 2c1.5-1.5 3.5-2 5-2" /></svg>
+                </div>
+            }
+            <div class="p-6">
+                <h2 class="font-display text-2xl font-semibold">@L[$"Amenities.{s.Key}.Title"]</h2>
+                <p class="mt-2 text-ink/75">@L[$"Amenities.{s.Key}.Text"]</p>
+            </div>
+        </article>
+    }
+</section>
+
+<section class="bg-white py-20 lg:py-28">
+    <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-20 lg:px-8">
+        <div class="grid grid-cols-2 gap-4">
+            <img src="@Images.Src(SiteImages.Bedroom, 800)" alt="@L[SiteImages.Bedroom.AltKey]" loading="lazy" class="col-span-2 aspect-[16/10] w-full rounded-sm object-cover" />
+            <img src="@Images.Src(SiteImages.Bathroom, 600)" alt="@L[SiteImages.Bathroom.AltKey]" loading="lazy" class="aspect-square w-full rounded-sm object-cover" />
+            <img src="@Images.Src(SiteImages.RoomDesk, 600)" alt="@L[SiteImages.RoomDesk.AltKey]" loading="lazy" class="aspect-square w-full rounded-sm object-cover" />
+        </div>
+        <div>
+            <h2 class="section-title">@L["Amenities.RoomTitle"]</h2>
+            <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+                @foreach (var f in roomFeatures)
+                {
+                    <li class="flex gap-3">
+                        <svg class="mt-1 shrink-0 text-gold-500" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 12 5 5L20 7" /></svg>
+                        <span>@L[f]</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>
+
+<partial name="_BookBand" />

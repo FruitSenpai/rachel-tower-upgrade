@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Site.Tagline" xml:space="preserve"><value>Hotel in Kolwezi, DR Congo</value></data>
+  <data name="Nav.Home" xml:space="preserve"><value>Home</value></data>
+  <data name="Nav.Explore" xml:space="preserve"><value>Explore</value></data>
+  <data name="Nav.History" xml:space="preserve"><value>History</value></data>
+  <data name="Nav.Amenities" xml:space="preserve"><value>Amenities</value></data>
+  <data name="Nav.Events" xml:space="preserve"><value>Meetings &amp; Events</value></data>
+  <data name="Nav.Book" xml:space="preserve"><value>Book a Room</value></data>
+  <data name="Nav.Contact" xml:space="preserve"><value>Contact</value></data>
+  <data name="Nav.Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="Nav.Main" xml:space="preserve"><value>Main navigation</value></data>
+  <data name="Nav.SwitchLanguage" xml:space="preserve"><value>Français</value></data>
+  <data name="Nav.SwitchLanguageLabel" xml:space="preserve"><value>Lire cette page en français</value></data>
+  <data name="Nav.SkipToContent" xml:space="preserve"><value>Skip to main content</value></data>
+  <data name="Footer.Address" xml:space="preserve"><value>Address</value></data>
+  <data name="Footer.Contact" xml:space="preserve"><value>Contact</value></data>
+  <data name="Footer.Explore" xml:space="preserve"><value>Explore</value></data>
+  <data name="Footer.Nearby" xml:space="preserve"><value>50 m from Kampi ya Boma Hotel and 100 m from Harmony Inn Hotel.</value></data>
+  <data name="Footer.Available" xml:space="preserve"><value>Our team is available 24/7.</value></data>
+  <data name="Footer.Rights" xml:space="preserve"><value>© {0} The Rachel Tower. All rights reserved.</value></data>
+  <data name="Footer.Credit" xml:space="preserve"><value>Website by</value></data>
+  <data name="WhatsApp.Label" xml:space="preserve"><value>Chat with us on WhatsApp</value></data>
+  <data name="WhatsApp.Greeting" xml:space="preserve"><value>Hello, I would like some information about a stay at The Rachel Tower.</value></data>
+  <data name="Common.LearnMore" xml:space="preserve"><value>Learn more</value></data>
+  <data name="Common.Call" xml:space="preserve"><value>Call</value></data>
+  <data name="Home.Title" xml:space="preserve"><value>The Rachel Tower | Hotel in Kolwezi, DR Congo</value></data>
+  <data name="Home.MetaDescription" xml:space="preserve"><value>A modern hotel in Kolwezi, Lualaba, with comfortable rooms, a restaurant, a fitness room and spaces for meetings, weddings and events.</value></data>
+  <data name="Home.HeroEyebrow" xml:space="preserve"><value>Kolwezi · Lualaba · DR Congo</value></data>
+  <data name="Home.HeroTitle" xml:space="preserve"><value>Comfort and attentive service in the heart of Kolwezi</value></data>
+  <data name="Home.HeroText" xml:space="preserve"><value>A modern hotel, open since 2023, for business trips and family stays alike.</value></data>
+  <data name="Home.CtaBook" xml:space="preserve"><value>Book a room</value></data>
+  <data name="Home.CtaExplore" xml:space="preserve"><value>Discover the hotel</value></data>
+  <data name="Home.IntroTitle" xml:space="preserve"><value>Welcome to The Rachel Tower</value></data>
+  <data name="Home.IntroText" xml:space="preserve"><value>Our team is dedicated to making your stay as comfortable and enjoyable as possible. Whether you are in Kolwezi for work or for leisure, we offer everything you need for a memorable stay, with the personal attention you deserve.</value></data>
+  <data name="Home.Rooms.Title" xml:space="preserve"><value>Rooms</value></data>
+  <data name="Home.Rooms.Text" xml:space="preserve"><value>Quiet, well-kept rooms with a work desk, an in-room safe and an en-suite shower.</value></data>
+  <data name="Home.Dining.Title" xml:space="preserve"><value>Restaurant</value></data>
+  <data name="Home.Dining.Text" xml:space="preserve"><value>From breakfast to dinner, dishes prepared by our chefs and served in our dining room.</value></data>
+  <data name="Home.Events.Title" xml:space="preserve"><value>Meetings &amp; events</value></data>
+  <data name="Home.Events.Text" xml:space="preserve"><value>From board meetings to weddings, our team takes care of every detail.</value></data>
+  <data name="Home.StoryEyebrow" xml:space="preserve"><value>Our story</value></data>
+  <data name="Home.StoryTitle" xml:space="preserve"><value>Built from the ground up in Kolwezi</value></data>
+  <data name="Home.StoryText" xml:space="preserve"><value>From an empty plot bought in March 2020 to our first guests in August 2023, discover how the hotel was built.</value></data>
+  <data name="Home.StoryCta" xml:space="preserve"><value>Read our story</value></data>
+  <data name="Home.LocationTitle" xml:space="preserve"><value>Find us</value></data>
+  <data name="Home.BookBandTitle" xml:space="preserve"><value>Ready to stay with us?</value></data>
+  <data name="Home.BookBandText" xml:space="preserve"><value>Send us your dates and our team will confirm your room, day or night.</value></data>
+  <data name="Explore.Title" xml:space="preserve"><value>Explore the hotel | The Rachel Tower</value></data>
+  <data name="Explore.MetaDescription" xml:space="preserve"><value>Take a look inside The Rachel Tower in Kolwezi: rooms, restaurant, lounge, fitness room and more.</value></data>
+  <data name="Explore.Eyebrow" xml:space="preserve"><value>Explore</value></data>
+  <data name="Explore.Heading" xml:space="preserve"><value>Welcome to The Rachel Tower</value></data>
+  <data name="Explore.P1" xml:space="preserve"><value>The Rachel Tower is a beautiful hotel in Kolwezi, Lualaba, in the Democratic Republic of Congo. We offer comfortable accommodation and exceptional service to every guest.</value></data>
+  <data name="Explore.P2" xml:space="preserve"><value>Our team of professionals is dedicated to making your stay as comfortable and enjoyable as possible, with a range of amenities and services to make it memorable.</value></data>
+  <data name="Explore.P3" xml:space="preserve"><value>We invite you to explore the hotel and the services we offer.</value></data>
+  <data name="Explore.GalleryTitle" xml:space="preserve"><value>Gallery</value></data>
+  <data name="Explore.LocationTitle" xml:space="preserve"><value>In the Joli Site neighbourhood</value></data>
+  <data name="Explore.LocationText" xml:space="preserve"><value>The hotel stands in the Joli Site neighbourhood of Manika, Kolwezi, 50 metres from Kampi ya Boma Hotel and 100 metres from Harmony Inn Hotel.</value></data>
+  <data name="Gallery.Open" xml:space="preserve"><value>Enlarge photo: {0}</value></data>
+  <data name="Gallery.Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Gallery.Previous" xml:space="preserve"><value>Previous photo</value></data>
+  <data name="Gallery.Next" xml:space="preserve"><value>Next photo</value></data>
+  <data name="History.Title" xml:space="preserve"><value>Our history | The Rachel Tower</value></data>
+  <data name="History.MetaDescription" xml:space="preserve"><value>How The Rachel Tower was built, from buying the land in 2020 to opening in August 2023.</value></data>
+  <data name="History.Eyebrow" xml:space="preserve"><value>Since 2020</value></data>
+  <data name="History.Heading" xml:space="preserve"><value>A glimpse of our history</value></data>
+  <data name="History.Intro" xml:space="preserve"><value>Since 2020, The Rachel Tower has grown from a dream into reality. Here are the key moments of its construction, followed by some of the drawings made while the building was being planned.</value></data>
+  <data name="History.GalleryTitle" xml:space="preserve"><value>Plans and construction</value></data>
+  <data name="History.PhotoAlt" xml:space="preserve"><value>Planning drawing or construction photo {0}</value></data>
+  <data name="History.1.Date" xml:space="preserve"><value>2 March 2020</value></data>
+  <data name="History.1.Title" xml:space="preserve"><value>Buying the land</value></data>
+  <data name="History.1.Body" xml:space="preserve"><value>The empty plot was bought from a lawyer in Kolwezi, Lualaba. The deal was concluded on the evening of 2 March 2020.</value></data>
+  <data name="History.2.Date" xml:space="preserve"><value>6 April 2020</value></data>
+  <data name="History.2.Title" xml:space="preserve"><value>Clearing the site</value></data>
+  <data name="History.2.Body" xml:space="preserve"><value>A month later, the land was cleared with a backhoe loader (TLB) rented from La Générale de Forage, under the supervision of Norbert Mahuwa.</value></data>
+  <data name="History.3.Date" xml:space="preserve"><value>Before construction</value></data>
+  <data name="History.3.Title" xml:space="preserve"><value>Digging the borehole</value></data>
+  <data name="History.3.Body" xml:space="preserve"><value>Because water is hard to come by in the area, an 85-metre borehole was drilled with a final casing of 125 mm. Water was reached at 43 metres, and an electric submersible pump was installed at 55 metres.</value></data>
+  <data name="History.4.Date" xml:space="preserve"><value>10 April 2021</value></data>
+  <data name="History.4.Title" xml:space="preserve"><value>Laying the foundations</value></data>
+  <data name="History.4.Body" xml:space="preserve"><value>Work on the foundations began. 24 pillars were set 2.20 metres deep on one-square-metre concrete pads reinforced with 12 mm steel. Reinforced ground beams were built under every future wall and topped with large stones supplied by Forrest Kolwezi. The ground was backfilled with laterite and compacted with a machine rented from EKMM SARL.</value></data>
+  <data name="History.5.Date" xml:space="preserve"><value>22 March 2022</value></data>
+  <data name="History.5.Title" xml:space="preserve"><value>Raising the walls</value></data>
+  <data name="History.5.Body" xml:space="preserve"><value>After a pause of a year, construction resumed. The walls were built with 20 × 20 × 40 cm bricks supplied by Kilma Bricks in Musompo, Kolwezi.</value></data>
+  <data name="History.6.Date" xml:space="preserve"><value>15 August 2022</value></data>
+  <data name="History.6.Title" xml:space="preserve"><value>Ground floor complete</value></data>
+  <data name="History.6.Body" xml:space="preserve"><value>The ground floor was finished, and the beams and formwork for the concrete slab were nearly ready.</value></data>
+  <data name="History.7.Date" xml:space="preserve"><value>27 August 2022</value></data>
+  <data name="History.7.Title" xml:space="preserve"><value>Pouring the slab</value></data>
+  <data name="History.7.Body" xml:space="preserve"><value>Forty people worked for 24 hours straight to pour the 196 m² slab: 300 bags (7.5 tonnes) of cement mixed with crushed sand from Katonto, poured and vibrated across the whole surface. It was the most expensive stage of the entire build.</value></data>
+  <data name="History.8.Date" xml:space="preserve"><value>9 December 2022</value></data>
+  <data name="History.8.Title" xml:space="preserve"><value>The upper floor</value></data>
+  <data name="History.8.Body" xml:space="preserve"><value>The first and final floor was completed by engineer François Cedrick Banza, to a design by architect Joseph Kasiho Biamungu.</value></data>
+  <data name="History.9.Date" xml:space="preserve"><value>31 Dec. 2022 to 11 Jan. 2023</value></data>
+  <data name="History.9.Title" xml:space="preserve"><value>The roof frame</value></data>
+  <data name="History.9.Body" xml:space="preserve"><value>A team of three led by Mambe designed and built the fir-wood frame that supports the roof.</value></data>
+  <data name="History.10.Date" xml:space="preserve"><value>11 to 20 January 2023</value></data>
+  <data name="History.10.Title" xml:space="preserve"><value>Finishing touches</value></data>
+  <data name="History.10.Body" xml:space="preserve"><value>The roof tiles, imported from China, went on in ten days: 566 red tiles and 34 ridge and valley trays.</value></data>
+  <data name="History.11.Date" xml:space="preserve"><value>28 August 2023</value></data>
+  <data name="History.11.Title" xml:space="preserve"><value>Opening day</value></data>
+  <data name="History.11.Body" xml:space="preserve"><value>The Rachel Tower opened its doors and welcomed its first guests.</value></data>
+  <data name="Amenities.Title" xml:space="preserve"><value>Amenities &amp; services | The Rachel Tower</value></data>
+  <data name="Amenities.MetaDescription" xml:space="preserve"><value>Restaurant, fitness room, spa and attentive service around the clock at The Rachel Tower, Kolwezi.</value></data>
+  <data name="Amenities.Eyebrow" xml:space="preserve"><value>Amenities</value></data>
+  <data name="Amenities.Heading" xml:space="preserve"><value>Our amenities &amp; services</value></data>
+  <data name="Amenities.Intro" xml:space="preserve"><value>Experience comfort and care at The Rachel Tower. Whether you are travelling for business or leisure, we have everything you need for a memorable stay. Let us take care of you and give you the personal attention you deserve.</value></data>
+  <data name="Amenities.Restaurant.Title" xml:space="preserve"><value>Restaurant</value></data>
+  <data name="Amenities.Restaurant.Text" xml:space="preserve"><value>A refined restaurant serving delicious dishes, from breakfast to dinner.</value></data>
+  <data name="Amenities.Fitness.Title" xml:space="preserve"><value>Fitness room</value></data>
+  <data name="Amenities.Fitness.Text" xml:space="preserve"><value>A modern fitness room with a treadmill and strength-training equipment.</value></data>
+  <data name="Amenities.Spa.Title" xml:space="preserve"><value>Spa</value></data>
+  <data name="Amenities.Spa.Text" xml:space="preserve"><value>A relaxing spa offering a range of massages.</value></data>
+  <data name="Amenities.Service.Title" xml:space="preserve"><value>24/7 service</value></data>
+  <data name="Amenities.Service.Text" xml:space="preserve"><value>Our friendly staff is available day and night for reservations and any request.</value></data>
+  <data name="Amenities.RoomTitle" xml:space="preserve"><value>In your room</value></data>
+  <data name="Room.Bed" xml:space="preserve"><value>Comfortable bed with quality linen</value></data>
+  <data name="Room.Desk" xml:space="preserve"><value>Work desk</value></data>
+  <data name="Room.Safe" xml:space="preserve"><value>In-room safe</value></data>
+  <data name="Room.Tea" xml:space="preserve"><value>Tea and coffee tray</value></data>
+  <data name="Room.Tv" xml:space="preserve"><value>Television</value></data>
+  <data name="Room.Shower" xml:space="preserve"><value>En-suite bathroom with walk-in shower</value></data>
+  <data name="Events.Title" xml:space="preserve"><value>Meetings &amp; events | The Rachel Tower</value></data>
+  <data name="Events.MetaDescription" xml:space="preserve"><value>Meetings, conferences, weddings and catering at The Rachel Tower in Kolwezi.</value></data>
+  <data name="Events.Eyebrow" xml:space="preserve"><value>Meetings &amp; events</value></data>
+  <data name="Events.Heading" xml:space="preserve"><value>Memorable meetings and celebrations</value></data>
+  <data name="Events.Planning.Title" xml:space="preserve"><value>Event planning</value></data>
+  <data name="Events.Planning.Text" xml:space="preserve"><value>At The Rachel Tower, we specialise in memorable meetings and events. Our experienced event planners work with you to make sure every detail is taken care of. From small board meetings to large conferences, we have the right space for your needs.</value></data>
+  <data name="Events.Planning.Cta" xml:space="preserve"><value>Start planning</value></data>
+  <data name="Events.Weddings.Title" xml:space="preserve"><value>Weddings</value></data>
+  <data name="Events.Weddings.Text" xml:space="preserve"><value>Your wedding day is one of the most important days of your life, and we want to make it unforgettable. Our wedding specialists work with you to create the perfect day and take care of every detail, from the ceremony to the reception.</value></data>
+  <data name="Events.Weddings.Cta" xml:space="preserve"><value>Request a proposal</value></data>
+  <data name="Events.Catering.Title" xml:space="preserve"><value>Catering</value></data>
+  <data name="Events.Catering.Text" xml:space="preserve"><value>We offer a wide range of catering options to suit your needs. From breakfast to dinner, our chefs create delicious, memorable dishes for your event.</value></data>
+  <data name="Events.Catering.Cta" xml:space="preserve"><value>Ask about catering</value></data>
+  <data name="Events.MenusTitle" xml:space="preserve"><value>Our menus</value></data>
+  <data name="Events.MenusNote" xml:space="preserve"><value>Menus are available on request.</value></data>
+  <data name="Menu.Breakfast" xml:space="preserve"><value>Breakfast</value></data>
+  <data name="Menu.Lunch" xml:space="preserve"><value>Lunch</value></data>
+  <data name="Menu.Dinner" xml:space="preserve"><value>Dinner</value></data>
+  <data name="Menu.Reception" xml:space="preserve"><value>Reception</value></data>
+  <data name="Book.Title" xml:space="preserve"><value>Book a room | The Rachel Tower</value></data>
+  <data name="Book.MetaDescription" xml:space="preserve"><value>Book your room at The Rachel Tower in Kolwezi by WhatsApp, phone, email or Airbnb.</value></data>
+  <data name="Book.Eyebrow" xml:space="preserve"><value>Reservations</value></data>
+  <data name="Book.Heading" xml:space="preserve"><value>Book a room</value></data>
+  <data name="Book.Intro" xml:space="preserve"><value>Tell us your dates and our team will confirm your room, usually within the hour. Online booking with instant confirmation, mobile money and pay at the desk is coming soon.</value></data>
+  <data name="Book.CheckIn" xml:space="preserve"><value>Arrival</value></data>
+  <data name="Book.CheckOut" xml:space="preserve"><value>Departure</value></data>
+  <data name="Book.Guests" xml:space="preserve"><value>Guests</value></data>
+  <data name="Book.Name" xml:space="preserve"><value>Your name</value></data>
+  <data name="Book.Submit" xml:space="preserve"><value>Send my request on WhatsApp</value></data>
+  <data name="Book.WhatsAppMessage" xml:space="preserve"><value>Hello, I would like to book a room at The Rachel Tower.
+Arrival: {0}
+Departure: {1}
+Guests: {2}
+Name: {3}</value></data>
+  <data name="Book.OtherWays" xml:space="preserve"><value>Other ways to book</value></data>
+  <data name="Book.CallUs" xml:space="preserve"><value>Call us</value></data>
+  <data name="Book.EmailUs" xml:space="preserve"><value>Email us</value></data>
+  <data name="Book.Airbnb" xml:space="preserve"><value>Find us on Airbnb</value></data>
+  <data name="Val.Required" xml:space="preserve"><value>{0} is required.</value></data>
+  <data name="Val.Email" xml:space="preserve"><value>Please enter a valid email address.</value></data>
+  <data name="Val.StringLength" xml:space="preserve"><value>{0} must be {1} characters or fewer.</value></data>
+  <data name="Val.Range" xml:space="preserve"><value>{0} must be between {1} and {2}.</value></data>
+  <data name="Val.DepartureAfterArrival" xml:space="preserve"><value>Departure must be after arrival.</value></data>
+  <data name="Val.ArrivalInPast" xml:space="preserve"><value>Arrival can't be in the past.</value></data>
+  <data name="Val.Summary" xml:space="preserve"><value>Please correct the highlighted fields.</value></data>
+  <data name="Contact.Title" xml:space="preserve"><value>Contact us | The Rachel Tower</value></data>
+  <data name="Contact.MetaDescription" xml:space="preserve"><value>Contact The Rachel Tower in Kolwezi. Our team is available 24/7 for reservations and enquiries.</value></data>
+  <data name="Contact.Eyebrow" xml:space="preserve"><value>Contact</value></data>
+  <data name="Contact.Heading" xml:space="preserve"><value>Contact us</value></data>
+  <data name="Contact.Intro" xml:space="preserve"><value>If you have any questions or would like to book a room, don't hesitate to get in touch. Our friendly staff is available 24/7 to help with your reservation and any enquiry.</value></data>
+  <data name="Contact.Name" xml:space="preserve"><value>Name</value></data>
+  <data name="Contact.Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Contact.Phone" xml:space="preserve"><value>Phone (optional)</value></data>
+  <data name="Contact.Topic" xml:space="preserve"><value>Subject</value></data>
+  <data name="Contact.Message" xml:space="preserve"><value>Message</value></data>
+  <data name="Contact.Submit" xml:space="preserve"><value>Send message</value></data>
+  <data name="Contact.Thanks" xml:space="preserve"><value>Thank you for contacting us! We will get back to you shortly.</value></data>
+  <data name="Contact.Failed" xml:space="preserve"><value>Sorry, your message could not be sent. Please try again or reach us on WhatsApp.</value></data>
+  <data name="Contact.AddressLabel" xml:space="preserve"><value>Address</value></data>
+  <data name="Contact.PhoneLabel" xml:space="preserve"><value>Phone</value></data>
+  <data name="Contact.EmailLabel" xml:space="preserve"><value>Email</value></data>
+  <data name="Contact.Directions" xml:space="preserve"><value>Get directions</value></data>
+  <data name="Contact.MapTitle" xml:space="preserve"><value>Map showing the hotel's location in Kolwezi</value></data>
+  <data name="Topic.Reservation" xml:space="preserve"><value>Reservation</value></data>
+  <data name="Topic.Event" xml:space="preserve"><value>Meeting or event</value></data>
+  <data name="Topic.Wedding" xml:space="preserve"><value>Wedding</value></data>
+  <data name="Topic.Catering" xml:space="preserve"><value>Catering</value></data>
+  <data name="Topic.Other" xml:space="preserve"><value>Other</value></data>
+  <data name="Error.NotFoundTitle" xml:space="preserve"><value>Page not found</value></data>
+  <data name="Error.NotFoundText" xml:space="preserve"><value>The page you are looking for doesn't exist or has moved.</value></data>
+  <data name="Error.GenericTitle" xml:space="preserve"><value>Something went wrong</value></data>
+  <data name="Error.GenericText" xml:space="preserve"><value>Please try again in a moment.</value></data>
+  <data name="Error.BackHome" xml:space="preserve"><value>Back to home</value></data>
+  <data name="Img.Logo" xml:space="preserve"><value>The Rachel Tower Hotel</value></data>
+  <data name="Img.Facade" xml:space="preserve"><value>Front of The Rachel Tower hotel</value></data>
+  <data name="Img.Aerial" xml:space="preserve"><value>Aerial view of the hotel and the Joli Site neighbourhood</value></data>
+  <data name="Img.Courtyard" xml:space="preserve"><value>Paved entrance courtyard</value></data>
+  <data name="Img.Reception" xml:space="preserve"><value>Reception desk</value></data>
+  <data name="Img.Lounge" xml:space="preserve"><value>Guest lounge</value></data>
+  <data name="Img.Bedroom" xml:space="preserve"><value>Bedroom with a double bed</value></data>
+  <data name="Img.RoomDesk" xml:space="preserve"><value>Work desk in a guest room</value></data>
+  <data name="Img.RoomEntrance" xml:space="preserve"><value>Room entrance with tea tray and television</value></data>
+  <data name="Img.Bathroom" xml:space="preserve"><value>Bathroom with walk-in shower</value></data>
+  <data name="Img.Safe" xml:space="preserve"><value>In-room safe</value></data>
+  <data name="Img.Linen" xml:space="preserve"><value>Hotel-branded bed linen</value></data>
+  <data name="Img.TeaService" xml:space="preserve"><value>Tea cups with the hotel's logo</value></data>
+  <data name="Img.Restaurant" xml:space="preserve"><value>Restaurant dining room</value></data>
+  <data name="Img.DiningRoom" xml:space="preserve"><value>Dining area</value></data>
+  <data name="Img.EventHall" xml:space="preserve"><value>Dining and event hall</value></data>
+  <data name="Img.Fitness" xml:space="preserve"><value>Fitness room</value></data>
+  <data name="Img.Kolwezi" xml:space="preserve"><value>Monument in Kolwezi</value></data>
+</root>

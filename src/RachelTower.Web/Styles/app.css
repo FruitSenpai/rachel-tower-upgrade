@@ -1,0 +1,133 @@
+/*
+  Tailwind CSS v4 source. Compiled to wwwroot/css/site.css:
+    tailwindcss -i Styles/app.css -o wwwroot/css/site.css --minify          (once)
+    tailwindcss -i Styles/app.css -o wwwroot/css/site.css --watch           (while editing)
+  See README.md for installing the standalone tailwindcss CLI.
+*/
+@import "tailwindcss";
+
+@source "../Pages";
+
+@theme {
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+
+  /* Brand colours, taken from the gold logo */
+  --color-gold-100: #f4ecdc;
+  --color-gold-300: #dcc28f;
+  --color-gold-500: #b08d57;
+  --color-gold-600: #94733f;
+  --color-gold-700: #765a30;
+  --color-ink: #1f1b16;
+  --color-ivory: #faf7f2;
+  --color-sand: #ebe2d3;
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.25em];
+  }
+
+  .section-title {
+    @apply font-display text-4xl font-semibold leading-tight sm:text-5xl;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-sm bg-gold-500 px-6 py-3 text-sm font-medium uppercase tracking-wider text-white transition hover:bg-gold-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-600;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 rounded-sm border border-ink/25 px-6 py-3 text-sm font-medium uppercase tracking-wider text-ink transition hover:border-ink hover:bg-ink hover:text-white;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-sm border border-white/50 px-6 py-3 text-sm font-medium uppercase tracking-wider text-white transition hover:bg-white hover:text-ink;
+  }
+
+  .link-arrow {
+    @apply inline-flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-gold-600 hover:text-gold-700;
+  }
+  .link-arrow::after {
+    content: "→";
+    @apply transition-transform;
+  }
+  .link-arrow:hover::after {
+    transform: translateX(4px);
+  }
+
+  .link-plain {
+    @apply text-ink underline decoration-gold-300 underline-offset-4 hover:decoration-gold-600;
+  }
+
+  .nav-link {
+    @apply relative py-2 text-ink/80 transition hover:text-ink;
+  }
+  .nav-link.is-active {
+    @apply text-gold-600;
+  }
+  .nav-link.is-active::after {
+    content: "";
+    @apply absolute inset-x-0 -bottom-0.5 h-px bg-gold-500;
+  }
+
+  .footer-heading {
+    @apply text-xs font-semibold uppercase tracking-[0.25em] text-gold-300;
+  }
+  .footer-link {
+    @apply text-white/80 transition hover:text-white;
+  }
+
+  .form-label {
+    @apply mb-1.5 block text-sm font-medium text-ink/80;
+  }
+  .form-input {
+    @apply block w-full rounded-sm border border-sand bg-white px-4 py-3 text-ink shadow-xs outline-none transition focus:border-gold-500 focus:ring-2 focus:ring-gold-300/50;
+  }
+  .form-input.input-validation-error {
+    @apply border-red-400;
+  }
+  .form-error {
+    @apply mt-1 block text-sm text-red-700;
+  }
+
+  /* Home page slideshow */
+  .hero-slide {
+    @apply absolute inset-0 -z-10 h-full w-full object-cover opacity-0 transition-opacity duration-[1500ms];
+  }
+  .hero-slide.is-active {
+    @apply opacity-100;
+  }
+
+  /* History timeline */
+  .timeline-item {
+    @apply relative pb-12 pl-10;
+  }
+  .timeline-item::before {
+    content: "";
+    @apply absolute left-[5px] top-2 h-3 w-3 -translate-x-1/2 rounded-full bg-gold-500 ring-4 ring-gold-100;
+  }
+  .timeline-item:not(.is-last)::after {
+    content: "";
+    @apply absolute bottom-0 left-[5px] top-6 w-px -translate-x-1/2 bg-sand;
+  }
+
+  /* Photo lightbox */
+  .lightbox {
+    @apply m-0 h-full max-h-none w-full max-w-none bg-ink/95 p-0;
+  }
+  .lightbox::backdrop {
+    @apply bg-ink/80;
+  }
+  .lightbox-btn {
+    @apply absolute flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-2xl text-white transition hover:bg-white/25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

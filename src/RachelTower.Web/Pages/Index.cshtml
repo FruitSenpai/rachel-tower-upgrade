@@ -1,0 +1,92 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = L["Home.Title"];
+    ViewData["Description"] = L["Home.MetaDescription"];
+    var hotel = HotelSettings.Value;
+    var highlights = new (SiteImage Image, string Title, string Text, string Page)[]
+    {
+        (SiteImages.Bedroom, L["Home.Rooms.Title"], L["Home.Rooms.Text"], "/Amenities"),
+        (SiteImages.Restaurant, L["Home.Dining.Title"], L["Home.Dining.Text"], "/Amenities"),
+        (SiteImages.EventHall, L["Home.Events.Title"], L["Home.Events.Text"], "/Events"),
+    };
+}
+@section Head {
+    <script type="application/ld+json">@Html.Raw(Model.HotelJsonLd(Images.Src(SiteImages.Facade, 1200), Url.AbsolutePageIn("/Index", SiteCultures.Current)))</script>
+}
+
+<section class="relative isolate flex min-h-[calc(100svh-5rem)] items-end overflow-hidden bg-ink" data-hero>
+    @for (var i = 0; i < SiteImages.HeroSlides.Length; i++)
+    {
+        var slide = SiteImages.HeroSlides[i];
+        <img src="@Images.Src(slide, 1920)" alt="" class="hero-slide @(i == 0 ? "is-active" : "")" @(i == 0 ? "fetchpriority=high" : "loading=lazy") data-hero-slide />
+    }
+    <div class="absolute inset-0 -z-0 bg-gradient-to-t from-ink/90 via-ink/35 to-ink/10"></div>
+    <div class="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-40 lg:px-8 lg:pb-28">
+        <p class="eyebrow text-gold-300">@L["Home.HeroEyebrow"]</p>
+        <h1 class="mt-4 max-w-3xl font-display text-5xl font-semibold leading-[1.05] text-white sm:text-6xl lg:text-7xl">@L["Home.HeroTitle"]</h1>
+        <p class="mt-6 max-w-xl text-lg text-white/85">@L["Home.HeroText"]</p>
+        <div class="mt-9 flex flex-wrap gap-3">
+            <a href="@Url.PageIn("/Book")" class="btn-primary">@L["Home.CtaBook"]</a>
+            <a href="@Url.PageIn("/Explore")" class="btn-ghost">@L["Home.CtaExplore"]</a>
+        </div>
+    </div>
+</section>
+
+<section class="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 lg:grid-cols-2 lg:gap-20 lg:px-8 lg:py-28">
+    <div>
+        <h2 class="section-title">@L["Home.IntroTitle"]</h2>
+        <p class="mt-6 text-lg leading-relaxed text-ink/80">@L["Home.IntroText"]</p>
+        <a href="@Url.PageIn("/Explore")" class="link-arrow mt-8">@L["Home.CtaExplore"]</a>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+        <img src="@Images.Src(SiteImages.Reception, 800)" alt="@L[SiteImages.Reception.AltKey]" loading="lazy" class="aspect-[3/4] w-full rounded-sm object-cover" />
+        <img src="@Images.Src(SiteImages.Lounge, 800)" alt="@L[SiteImages.Lounge.AltKey]" loading="lazy" class="mt-12 aspect-[3/4] w-full rounded-sm object-cover" />
+    </div>
+</section>
+
+<section class="bg-white py-20 lg:py-28">
+    <div class="mx-auto grid max-w-7xl gap-8 px-5 md:grid-cols-3 lg:px-8">
+        @foreach (var h in highlights)
+        {
+            <article class="group">
+                <div class="overflow-hidden rounded-sm">
+                    <img src="@Images.Src(h.Image, 900)" alt="@L[h.Image.AltKey]" loading="lazy" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-105" />
+                </div>
+                <h3 class="mt-6 font-display text-3xl font-semibold">@h.Title</h3>
+                <p class="mt-3 text-ink/75">@h.Text</p>
+                <a href="@Url.PageIn(h.Page)" class="link-arrow mt-4">@L["Common.LearnMore"]</a>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="relative isolate overflow-hidden bg-ink">
+    <img src="@Images.Src(SiteImages.Aerial, 1920)" alt="" loading="lazy" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-40" />
+    <div class="mx-auto max-w-7xl px-5 py-24 lg:px-8 lg:py-32">
+        <p class="eyebrow text-gold-300">@L["Home.StoryEyebrow"]</p>
+        <h2 class="mt-3 max-w-2xl font-display text-4xl font-semibold text-white sm:text-5xl">@L["Home.StoryTitle"]</h2>
+        <p class="mt-5 max-w-xl text-lg text-white/85">@L["Home.StoryText"]</p>
+        <a href="@Url.PageIn("/History")" class="btn-ghost mt-8">@L["Home.StoryCta"]</a>
+    </div>
+</section>
+
+<section class="mx-auto grid max-w-7xl gap-10 px-5 py-20 lg:grid-cols-[1fr_1.4fr] lg:px-8 lg:py-28">
+    <div>
+        <h2 class="section-title">@L["Home.LocationTitle"]</h2>
+        <address class="mt-6 not-italic leading-relaxed text-ink/80">
+            @hotel.StreetAddress<br />@hotel.Locality<br />@hotel.Region, @(SiteCultures.Current == SiteCultures.French ? "RD Congo" : "DR Congo")
+        </address>
+        <p class="mt-3 text-ink/70">@L["Footer.Nearby"]</p>
+        <ul class="mt-6 space-y-1">
+            @foreach (var phone in hotel.Phones)
+            {
+                <li><a class="link-plain" href="@HotelOptions.TelUrl(phone)">@phone</a></li>
+            }
+            <li><a class="link-plain" href="mailto:@hotel.Email">@hotel.Email</a></li>
+        </ul>
+    </div>
+    <partial name="_Map" />
+</section>
+
+<partial name="_BookBand" />

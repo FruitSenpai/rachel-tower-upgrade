@@ -1,0 +1,95 @@
+@page
+@model ContactModel
+@{
+    ViewData["Title"] = L["Contact.Title"];
+    ViewData["Description"] = L["Contact.MetaDescription"];
+    var hotel = HotelSettings.Value;
+}
+
+<partial name="_PageHeader" model='new PageHeaderModel(L["Contact.Eyebrow"], L["Contact.Heading"], SiteImages.Facade)' />
+
+<section class="mx-auto grid max-w-7xl gap-14 px-5 py-20 lg:grid-cols-[1.2fr_1fr] lg:gap-20 lg:px-8 lg:py-24">
+    <div>
+        <p class="text-lg leading-relaxed text-ink/80">@L["Contact.Intro"]</p>
+
+        @if (Model.Status == "sent")
+        {
+            <div class="mt-8 rounded-sm border border-emerald-200 bg-emerald-50 p-4 text-emerald-900" role="status">@L["Contact.Thanks"]</div>
+        }
+        else if (Model.Status == "failed")
+        {
+            <div class="mt-8 rounded-sm border border-red-200 bg-red-50 p-4 text-red-900" role="alert">@L["Contact.Failed"]</div>
+        }
+
+        <form method="post" class="mt-10 space-y-5" novalidate>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <p class="rounded-sm border border-red-200 bg-red-50 p-3 text-sm text-red-900" role="alert">@L["Val.Summary"]</p>
+            }
+
+            <div class="grid gap-5 sm:grid-cols-2">
+                <div>
+                    <label asp-for="Input.Name" class="form-label"></label>
+                    <input asp-for="Input.Name" class="form-input" autocomplete="name" required />
+                    <span asp-validation-for="Input.Name" class="form-error"></span>
+                </div>
+                <div>
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <input asp-for="Input.Email" type="email" class="form-input" autocomplete="email" required />
+                    <span asp-validation-for="Input.Email" class="form-error"></span>
+                </div>
+                <div>
+                    <label asp-for="Input.Phone" class="form-label"></label>
+                    <input asp-for="Input.Phone" type="tel" class="form-input" autocomplete="tel" />
+                    <span asp-validation-for="Input.Phone" class="form-error"></span>
+                </div>
+                <div>
+                    <label asp-for="Input.Topic" class="form-label"></label>
+                    <select asp-for="Input.Topic" class="form-input">
+                        @foreach (var t in ContactModel.Topics)
+                        {
+                            <option value="@t">@L[$"Topic.{t}"]</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label asp-for="Input.Message" class="form-label"></label>
+                <textarea asp-for="Input.Message" rows="6" class="form-input" required></textarea>
+                <span asp-validation-for="Input.Message" class="form-error"></span>
+            </div>
+
+            <div class="hidden" aria-hidden="true">
+                <label for="Website">Website</label>
+                <input id="Website" name="Website" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <button type="submit" class="btn-primary">@L["Contact.Submit"]</button>
+        </form>
+    </div>
+
+    <aside class="space-y-8">
+        <div>
+            <h2 class="eyebrow text-gold-600">@L["Contact.AddressLabel"]</h2>
+            <address class="mt-2 not-italic leading-relaxed">
+                @hotel.StreetAddress<br />@hotel.Locality<br />@hotel.Region, @(SiteCultures.Current == SiteCultures.French ? "RD Congo" : "DR Congo")
+            </address>
+            <p class="mt-2 text-sm text-ink/65">@L["Footer.Nearby"]</p>
+        </div>
+        <div>
+            <h2 class="eyebrow text-gold-600">@L["Contact.PhoneLabel"]</h2>
+            <ul class="mt-2 space-y-1">
+                @foreach (var phone in hotel.Phones)
+                {
+                    <li><a class="link-plain" href="@HotelOptions.TelUrl(phone)">@phone</a></li>
+                }
+                <li><a class="link-plain" href="@hotel.WhatsAppUrl(L["WhatsApp.Greeting"])" target="_blank" rel="noopener">WhatsApp</a></li>
+            </ul>
+        </div>
+        <div>
+            <h2 class="eyebrow text-gold-600">@L["Contact.EmailLabel"]</h2>
+            <a class="link-plain mt-2 inline-block" href="mailto:@hotel.Email">@hotel.Email</a>
+        </div>
+        <partial name="_Map" />
+    </aside>
+</section>

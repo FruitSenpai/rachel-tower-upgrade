@@ -1,0 +1,11 @@
+@{
+    var query = Uri.EscapeDataString(HotelSettings.Value.MapQuery);
+}
+@* Embedded Google Map. No API key needed for this embed format. *@
+<div class="flex flex-col">
+<div class="flex-1 overflow-hidden rounded-sm border border-sand bg-sand">
+    <iframe title="@L["Contact.MapTitle"]" src="https://www.google.com/maps?q=@query&z=16&hl=@SiteCultures.Current&output=embed"
+            class="h-80 w-full lg:h-full lg:min-h-96" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+<a href="https://www.google.com/maps/search/?api=1&query=@query" target="_blank" rel="noopener" class="link-arrow mt-3 lg:hidden">@L["Contact.Directions"]</a>
+</div>

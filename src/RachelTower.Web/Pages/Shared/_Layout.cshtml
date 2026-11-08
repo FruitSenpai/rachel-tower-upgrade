@@ -1,0 +1,152 @@
+﻿@{
+    var hotel = HotelSettings.Value;
+    var culture = SiteCultures.Current;
+    var other = SiteCultures.Other(culture);
+
+    // Pages without a localized route (e.g. /Error) link to the home page when switching language.
+    var currentPage = ViewContext.RouteData.Values["page"] as string ?? "/Index";
+    var localizedPage = SiteRoutes.Pages.ContainsKey(currentPage) ? currentPage : "/Index";
+    var isLocalized = SiteRoutes.Pages.ContainsKey(currentPage);
+
+    var nav = new (string Page, string Label)[]
+    {
+        ("/Index", L["Nav.Home"]),
+        ("/Explore", L["Nav.Explore"]),
+        ("/History", L["Nav.History"]),
+        ("/Amenities", L["Nav.Amenities"]),
+        ("/Events", L["Nav.Events"]),
+        ("/Contact", L["Nav.Contact"]),
+    };
+}
+<!DOCTYPE html>
+<html lang="@culture">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="@ViewData["Description"]" />
+    <meta name="theme-color" content="#1f1b16" />
+    @if (isLocalized)
+    {
+        <link rel="canonical" href="@Url.AbsolutePageIn(currentPage, culture)" />
+        @foreach (var c in SiteCultures.All)
+        {
+            <link rel="alternate" hreflang="@c" href="@Url.AbsolutePageIn(currentPage, c)" />
+        }
+        <link rel="alternate" hreflang="x-default" href="@Url.AbsolutePageIn(currentPage, SiteCultures.Default)" />
+    }
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="@hotel.Name" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Description"]" />
+    <meta property="og:image" content="@Images.Src(SiteImages.Facade, 1200)" />
+    <meta property="og:locale" content="@(culture == SiteCultures.French ? "fr_CD" : "en_US")" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="icon" href="~/favicon.ico" />
+    @await RenderSectionAsync("Head", required: false)
+</head>
+<body class="bg-ivory font-sans text-ink antialiased">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-white">@L["Nav.SkipToContent"]</a>
+
+    <header class="sticky top-0 z-40 border-b border-sand/80 bg-ivory/95 backdrop-blur" data-site-header>
+        <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-5 lg:px-8">
+            <a href="@Url.PageIn("/Index")" class="flex shrink-0 items-center gap-3" aria-label="@hotel.Name, @L["Nav.Home"]">
+                <img src="@Images.Src(SiteImages.Logo, 160)" alt="" width="56" height="56" class="h-14 w-14 rounded-sm object-cover" />
+                <span class="font-display text-xl font-semibold uppercase leading-none tracking-[0.18em]">The Rachel<br />Tower</span>
+            </a>
+
+            <nav aria-label="@L["Nav.Main"]" class="hidden lg:block">
+                <ul class="flex items-center gap-7 text-[0.95rem]">
+                    @foreach (var item in nav)
+                    {
+                        var active = item.Page == currentPage;
+                        <li>
+                            <a href="@Url.PageIn(item.Page)" class="nav-link @(active ? "is-active" : "")" aria-current="@(active ? "page" : null)">@item.Label</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="@Url.PageIn(localizedPage, other)" hreflang="@other" lang="@other" class="text-sm font-medium uppercase tracking-wider text-ink/70 hover:text-gold-600" aria-label="@L["Nav.SwitchLanguageLabel"]">@other</a>
+                <a href="@Url.PageIn("/Book")" class="btn-primary hidden sm:inline-flex">@L["Nav.Book"]</a>
+                <button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded border border-sand lg:hidden" aria-controls="mobile-nav" aria-expanded="false" data-nav-toggle>
+                    <span class="sr-only">@L["Nav.Menu"]</span>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <nav id="mobile-nav" aria-label="@L["Nav.Main"]" class="hidden border-t border-sand bg-ivory lg:hidden" data-mobile-nav>
+            <ul class="mx-auto max-w-7xl px-5 py-3">
+                @foreach (var item in nav)
+                {
+                    <li><a href="@Url.PageIn(item.Page)" class="block py-3 text-lg" aria-current="@(item.Page == currentPage ? "page" : null)">@item.Label</a></li>
+                }
+                <li class="pt-2 pb-3"><a href="@Url.PageIn("/Book")" class="btn-primary w-full justify-center">@L["Nav.Book"]</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-ink text-white/80">
+        <div class="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
+            <div>
+                <p class="font-display text-2xl font-semibold uppercase tracking-[0.18em] text-white">The Rachel Tower</p>
+                <p class="mt-3 text-sm">@L["Site.Tagline"]</p>
+                <p class="mt-3 text-sm">@L["Footer.Available"]</p>
+            </div>
+            <div>
+                <h2 class="footer-heading">@L["Footer.Address"]</h2>
+                <address class="mt-4 text-sm not-italic leading-relaxed">
+                    @hotel.StreetAddress<br />@hotel.Locality<br />@hotel.Region, @(culture == SiteCultures.French ? "RD Congo" : "DR Congo")
+                </address>
+                <p class="mt-3 text-sm text-white/60">@L["Footer.Nearby"]</p>
+            </div>
+            <div>
+                <h2 class="footer-heading">@L["Footer.Contact"]</h2>
+                <ul class="mt-4 space-y-2 text-sm">
+                    @foreach (var phone in hotel.Phones)
+                    {
+                        <li><a class="footer-link" href="@HotelOptions.TelUrl(phone)">@phone</a></li>
+                    }
+                    <li><a class="footer-link" href="mailto:@hotel.Email">@hotel.Email</a></li>
+                    <li><a class="footer-link" href="@hotel.WhatsAppUrl(L["WhatsApp.Greeting"])" target="_blank" rel="noopener">WhatsApp</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="footer-heading">@L["Footer.Explore"]</h2>
+                <ul class="mt-4 space-y-2 text-sm">
+                    @foreach (var item in nav.Skip(1))
+                    {
+                        <li><a class="footer-link" href="@Url.PageIn(item.Page)">@item.Label</a></li>
+                    }
+                    <li><a class="footer-link" href="@hotel.AirbnbUrl" target="_blank" rel="noopener">Airbnb</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-white/10">
+            <div class="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-6 text-xs text-white/50 sm:flex-row sm:justify-between lg:px-8">
+                <p>@string.Format(L["Footer.Rights"], DateTime.UtcNow.Year)</p>
+                <p>@L["Footer.Credit"] <a class="footer-link" href="https://www.iragi.ca/" target="_blank" rel="noopener">Iragiligenda</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="@hotel.WhatsAppUrl(L["WhatsApp.Greeting"])" target="_blank" rel="noopener"
+       class="fixed bottom-5 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+       aria-label="@L["WhatsApp.Label"]" title="@L["WhatsApp.Label"]">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 7c0 5.45-4.44 9.89-9.88 9.89m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.16-3.48-8.41" /></svg>
+    </a>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

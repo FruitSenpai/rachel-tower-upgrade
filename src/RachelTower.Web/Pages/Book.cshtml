@@ -1,0 +1,66 @@
+@page
+@model BookModel
+@{
+    ViewData["Title"] = L["Book.Title"];
+    ViewData["Description"] = L["Book.MetaDescription"];
+    var hotel = HotelSettings.Value;
+}
+
+<partial name="_PageHeader" model='new PageHeaderModel(L["Book.Eyebrow"], L["Book.Heading"], SiteImages.Bedroom)' />
+
+<section class="mx-auto grid max-w-7xl gap-14 px-5 py-20 lg:grid-cols-[1.4fr_1fr] lg:gap-20 lg:px-8 lg:py-24">
+    <div>
+        <p class="text-lg leading-relaxed text-ink/80">@L["Book.Intro"]</p>
+
+        <form method="post" class="mt-10 rounded-sm bg-white p-6 shadow-sm ring-1 ring-sand sm:p-8" novalidate>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <p class="mb-5 rounded-sm border border-red-200 bg-red-50 p-3 text-sm text-red-900" role="alert">@L["Val.Summary"]</p>
+            }
+            <div class="grid gap-5 sm:grid-cols-2">
+                <div>
+                    <label asp-for="Input.CheckIn" class="form-label"></label>
+                    <input asp-for="Input.CheckIn" type="date" class="form-input" required data-checkin />
+                    <span asp-validation-for="Input.CheckIn" class="form-error"></span>
+                </div>
+                <div>
+                    <label asp-for="Input.CheckOut" class="form-label"></label>
+                    <input asp-for="Input.CheckOut" type="date" class="form-input" required data-checkout />
+                    <span asp-validation-for="Input.CheckOut" class="form-error"></span>
+                </div>
+                <div>
+                    <label asp-for="Input.Guests" class="form-label"></label>
+                    <input asp-for="Input.Guests" type="number" min="1" max="10" class="form-input" />
+                    <span asp-validation-for="Input.Guests" class="form-error"></span>
+                </div>
+                <div>
+                    <label asp-for="Input.Name" class="form-label"></label>
+                    <input asp-for="Input.Name" class="form-input" autocomplete="name" required />
+                    <span asp-validation-for="Input.Name" class="form-error"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary mt-7 w-full justify-center sm:w-auto">@L["Book.Submit"]</button>
+        </form>
+    </div>
+
+    <aside>
+        <h2 class="font-display text-3xl font-semibold">@L["Book.OtherWays"]</h2>
+        <ul class="mt-6 divide-y divide-sand border-y border-sand">
+            @foreach (var phone in hotel.Phones)
+            {
+                <li class="flex items-center justify-between py-4">
+                    <span class="text-ink/70">@L["Book.CallUs"]</span>
+                    <a class="link-plain font-medium" href="@HotelOptions.TelUrl(phone)">@phone</a>
+                </li>
+            }
+            <li class="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                <span class="text-ink/70">@L["Book.EmailUs"]</span>
+                <a class="link-plain break-all font-medium" href="mailto:@hotel.Email">@hotel.Email</a>
+            </li>
+            <li class="py-4">
+                <a class="link-arrow" href="@hotel.AirbnbUrl" target="_blank" rel="noopener">@L["Book.Airbnb"]</a>
+            </li>
+        </ul>
+        <img src="@Images.Src(SiteImages.Linen, 800)" alt="@L[SiteImages.Linen.AltKey]" loading="lazy" class="mt-8 aspect-[4/3] w-full rounded-sm object-cover" />
+    </aside>
+</section>

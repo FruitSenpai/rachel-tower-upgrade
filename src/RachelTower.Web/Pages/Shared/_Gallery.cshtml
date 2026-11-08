@@ -1,0 +1,25 @@
+@model IReadOnlyList<GalleryItem>
+@* Responsive photo grid. Each tile opens a full-size lightbox (see wwwroot/js/site.js). *@
+<ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" data-gallery>
+    @for (var i = 0; i < Model.Count; i++)
+    {
+        var item = Model[i];
+        <li>
+            <a href="@Images.Src(item.Image, 1800)" class="group block overflow-hidden rounded-sm bg-sand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
+               data-gallery-item data-index="@i" aria-label="@string.Format(L["Gallery.Open"], item.Alt)">
+                <img src="@Images.Src(item.Image, 600)" alt="@item.Alt" loading="lazy" decoding="async"
+                     class="aspect-[4/3] h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+            </a>
+        </li>
+    }
+</ul>
+
+<dialog class="lightbox" data-lightbox aria-label="@L["Explore.GalleryTitle"]">
+    <figure class="flex h-full w-full flex-col items-center justify-center gap-3 p-4">
+        <img src="" alt="" class="max-h-[82vh] max-w-full object-contain" data-lightbox-img />
+        <figcaption class="text-center text-sm text-white/80" data-lightbox-caption></figcaption>
+    </figure>
+    <button type="button" class="lightbox-btn right-4 top-4" data-lightbox-close aria-label="@L["Gallery.Close"]">✕</button>
+    <button type="button" class="lightbox-btn left-4 top-1/2 -translate-y-1/2" data-lightbox-prev aria-label="@L["Gallery.Previous"]">‹</button>
+    <button type="button" class="lightbox-btn right-4 top-1/2 -translate-y-1/2" data-lightbox-next aria-label="@L["Gallery.Next"]">›</button>
+</dialog>

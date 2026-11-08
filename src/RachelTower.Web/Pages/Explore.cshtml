@@ -1,0 +1,32 @@
+@page
+@{
+    ViewData["Title"] = L["Explore.Title"];
+    ViewData["Description"] = L["Explore.MetaDescription"];
+    var gallery = SiteImages.Gallery.Select(i => new GalleryItem(i, L[i.AltKey])).ToList();
+}
+
+<partial name="_PageHeader" model='new PageHeaderModel(L["Explore.Eyebrow"], L["Explore.Heading"], SiteImages.Reception)' />
+
+<section class="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-2 lg:gap-20 lg:px-8 lg:py-24">
+    <div class="space-y-5 text-lg leading-relaxed text-ink/80">
+        <p>@L["Explore.P1"]</p>
+        <p>@L["Explore.P2"]</p>
+        <p>@L["Explore.P3"]</p>
+    </div>
+    <figure>
+        <img src="@Images.Src(SiteImages.Kolwezi, 1000)" alt="@L[SiteImages.Kolwezi.AltKey]" loading="lazy" class="aspect-[4/3] w-full rounded-sm object-cover" />
+        <figcaption class="mt-4">
+            <h2 class="font-display text-2xl font-semibold">@L["Explore.LocationTitle"]</h2>
+            <p class="mt-2 text-ink/75">@L["Explore.LocationText"]</p>
+        </figcaption>
+    </figure>
+</section>
+
+<section class="bg-white py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <h2 class="section-title mb-10">@L["Explore.GalleryTitle"]</h2>
+        <partial name="_Gallery" model="gallery" />
+    </div>
+</section>
+
+<partial name="_BookBand" />

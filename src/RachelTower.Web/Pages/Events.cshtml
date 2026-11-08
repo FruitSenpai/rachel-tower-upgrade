@@ -1,0 +1,43 @@
+@page
+@{
+    ViewData["Title"] = L["Events.Title"];
+    ViewData["Description"] = L["Events.MetaDescription"];
+    // Each block links to the contact form with the matching subject pre-selected.
+    var blocks = new (string Key, string Topic, SiteImage Image)[]
+    {
+        ("Planning", "Event", SiteImages.EventHall),
+        ("Weddings", "Wedding", SiteImages.Restaurant),
+        ("Catering", "Catering", SiteImages.DiningRoom),
+    };
+    var menus = new[] { "Menu.Breakfast", "Menu.Lunch", "Menu.Dinner", "Menu.Reception" };
+}
+
+<partial name="_PageHeader" model='new PageHeaderModel(L["Events.Eyebrow"], L["Events.Heading"], SiteImages.EventHall)' />
+
+<div class="mx-auto max-w-7xl space-y-20 px-5 py-20 lg:space-y-28 lg:px-8 lg:py-28">
+    @for (var i = 0; i < blocks.Length; i++)
+    {
+        var b = blocks[i];
+        <section class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+            <img src="@Images.Src(b.Image, 1000)" alt="@L[b.Image.AltKey]" loading="lazy" class="aspect-[4/3] w-full rounded-sm object-cover @(i % 2 == 1 ? "lg:order-2" : "")" />
+            <div>
+                <h2 class="section-title">@L[$"Events.{b.Key}.Title"]</h2>
+                <p class="mt-5 text-lg leading-relaxed text-ink/80">@L[$"Events.{b.Key}.Text"]</p>
+                @if (b.Key == "Catering")
+                {
+                    <h3 class="mt-8 eyebrow text-gold-600">@L["Events.MenusTitle"]</h3>
+                    <ul class="mt-3 flex flex-wrap gap-2">
+                        @foreach (var m in menus)
+                        {
+                            <li class="rounded-full border border-sand bg-white px-4 py-1.5 text-sm">@L[m]</li>
+                        }
+                    </ul>
+                    <p class="mt-3 text-sm text-ink/60">@L["Events.MenusNote"]</p>
+                }
+                <a href="@Url.PageIn("/Contact", values: new { topic = b.Topic })" class="btn-primary mt-8">@L[$"Events.{b.Key}.Cta"]</a>
+            </div>
+        </section>
+    }
+</div>
+
+<partial name="_BookBand" />
