@@ -1,0 +1,85 @@
+@page "/admin/bookings"
+@model RachelTower.Web.Pages.Admin.Bookings.IndexModel
+@{
+    ViewData["Title"] = L["Admin.Nav.Bookings"];
+    var ci = CultureInfo.CurrentCulture;
+    var statuses = new[] { "upcoming", "all" }.Concat(Enum.GetNames<BookingStatus>());
+}
+
+<div class="flex flex-wrap items-end justify-between gap-4">
+    <h1 class="font-display text-4xl font-semibold">@L["Admin.Nav.Bookings"]</h1>
+    <a href="/admin/bookings/new" class="btn-primary">@L["Admin.Nav.New"]</a>
+</div>
+
+<form method="get" class="mt-6 grid gap-3 rounded bg-white p-4 shadow-sm ring-1 ring-stone-200 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_auto] lg:items-end">
+    <div>
+        <label for="q" class="form-label">@L["Admin.Search"]</label>
+        <input id="q" name="q" value="@Model.Q" class="form-input py-2" type="search" />
+    </div>
+    <div>
+        <label for="status" class="form-label">@L["Admin.Filter.Status"]</label>
+        <select id="status" name="status" class="form-input py-2">
+            @foreach (var s in statuses)
+            {
+                var label = s switch { "upcoming" => L["Admin.Filter.Upcoming"], "all" => L["Admin.Filter.All"], _ => L[$"Status.{s}"] };
+                <option value="@s" selected="@(Model.Status == s)">@label</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="from" class="form-label">@L["Admin.Filter.From"]</label>
+        <input id="from" name="from" type="date" value="@Model.From?.ToString("yyyy-MM-dd")" class="form-input py-2" />
+    </div>
+    <div>
+        <label for="to" class="form-label">@L["Admin.Filter.To"]</label>
+        <input id="to" name="to" type="date" value="@Model.To?.ToString("yyyy-MM-dd")" class="form-input py-2" />
+    </div>
+    <button type="submit" class="btn-outline justify-center py-2.5">@L["Admin.Filter.Apply"]</button>
+</form>
+
+<p class="mt-6 text-sm text-ink/60">@string.Format(L["Admin.Results"], Model.Total)</p>
+
+<div class="mt-2 overflow-x-auto rounded bg-white shadow-sm ring-1 ring-stone-200">
+    <table class="w-full min-w-[56rem] text-left text-sm">
+        <thead class="border-b border-stone-200 bg-stone-50 text-xs uppercase tracking-wide text-ink/60">
+            <tr>
+                <th class="px-4 py-3 font-medium">@L["Admin.Col.Ref"]</th>
+                <th class="px-4 py-3 font-medium">@L["Admin.Col.Guest"]</th>
+                <th class="px-4 py-3 font-medium">@L["Admin.Col.Room"]</th>
+                <th class="px-4 py-3 font-medium">@L["Admin.Col.Dates"]</th>
+                <th class="px-4 py-3 font-medium">@L["Admin.Col.Status"]</th>
+                <th class="px-4 py-3 font-medium">@L["Admin.Col.Payment"]</th>
+                <th class="px-4 py-3 text-right font-medium">@L["Admin.Col.Total"]</th>
+                <th class="px-4 py-3 font-medium">@L["Admin.Col.Source"]</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-stone-100">
+            @if (Model.Bookings.Count == 0)
+            {
+                <tr><td colspan="8" class="px-4 py-8 text-center text-ink/60">@L["Admin.None"]</td></tr>
+            }
+            @foreach (var b in Model.Bookings)
+            {
+                <tr class="hover:bg-stone-50">
+                    <td class="px-4 py-3"><a href="/admin/bookings/@b.Id" class="font-mono font-medium text-gold-700 hover:underline">@b.Reference</a></td>
+                    <td class="px-4 py-3"><span class="font-medium">@b.GuestName</span><span class="block text-xs text-ink/60">@b.GuestPhone</span></td>
+                    <td class="px-4 py-3">@b.Room.Number</td>
+                    <td class="px-4 py-3 whitespace-nowrap">@AdminUi.Dates(b, ci)</td>
+                    <td class="px-4 py-3"><span class="rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 @AdminUi.StatusClass(b.Status)">@L[$"Status.{b.Status}"]</span></td>
+                    <td class="px-4 py-3 @(b.PaymentStatus == PaymentStatus.Unpaid ? "text-amber-700" : "text-emerald-700")">@L[$"PaymentStatus.{b.PaymentStatus}"]</td>
+                    <td class="px-4 py-3 text-right whitespace-nowrap">@Money.Usd(b.TotalUsd, ci)</td>
+                    <td class="px-4 py-3 text-ink/70">@L[$"Source.{b.Source}"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.Pages > 1)
+{
+    <nav class="mt-4 flex items-center justify-between text-sm">
+        @if (Model.PageNumber > 1) { <a class="link-plain" href="@Model.PageUrl(Model.PageNumber - 1)">← @L["Admin.Prev"]</a> } else { <span></span> }
+        <span class="text-ink/60">@string.Format(L["Admin.Page"], Model.PageNumber, Model.Pages)</span>
+        @if (Model.PageNumber < Model.Pages) { <a class="link-plain" href="@Model.PageUrl(Model.PageNumber + 1)">@L["Admin.Next"] →</a> } else { <span></span> }
+    </nav>
+}

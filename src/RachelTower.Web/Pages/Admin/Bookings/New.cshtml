@@ -1,0 +1,110 @@
+@page "/admin/bookings/new"
+@model RachelTower.Web.Pages.Admin.Bookings.NewModel
+@{
+    ViewData["Title"] = L["Admin.New.Title"];
+    var culture = SiteCultures.Current;
+    var ci = CultureInfo.CurrentCulture;
+}
+
+<h1 class="font-display text-4xl font-semibold">@L["Admin.New.Title"]</h1>
+<p class="mt-1 text-ink/60">@L["Admin.New.Intro"]</p>
+
+<form method="post" class="mt-8 max-w-4xl space-y-6" novalidate>
+    <div asp-validation-summary="ModelOnly" class="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-900 empty:hidden [&_ul]:list-none"></div>
+
+    <section class="grid gap-5 rounded bg-white p-6 shadow-sm ring-1 ring-stone-200 sm:grid-cols-2 lg:grid-cols-3">
+        <div>
+            <label asp-for="Input.RoomTypeCode" class="form-label"></label>
+            <select asp-for="Input.RoomTypeCode" class="form-input" data-room-type>
+                @foreach (var t in Model.RoomTypes)
+                {
+                    <option value="@t.Code">@t.Name(culture) (@Money.Usd(t.NightlyRateUsd, ci))</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label asp-for="Input.RoomId" class="form-label"></label>
+            <select asp-for="Input.RoomId" class="form-input" data-room>
+                <option value="">@L["Admin.New.AnyRoom"]</option>
+                @foreach (var r in Model.Rooms)
+                {
+                    <option value="@r.Id" data-type="@r.RoomType.Code">@r.Number</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label asp-for="Input.Guests" class="form-label"></label>
+            <input asp-for="Input.Guests" type="number" min="1" max="10" class="form-input" />
+            <span asp-validation-for="Input.Guests" class="form-error"></span>
+        </div>
+        <div>
+            <label asp-for="Input.CheckIn" class="form-label"></label>
+            <input asp-for="Input.CheckIn" type="date" class="form-input" data-checkin />
+            <span asp-validation-for="Input.CheckIn" class="form-error"></span>
+        </div>
+        <div>
+            <label asp-for="Input.CheckOut" class="form-label"></label>
+            <input asp-for="Input.CheckOut" type="date" class="form-input" data-checkout />
+            <span asp-validation-for="Input.CheckOut" class="form-error"></span>
+        </div>
+        <div>
+            <label asp-for="Input.Source" class="form-label"></label>
+            <select asp-for="Input.Source" class="form-input">
+                @foreach (var s in new[] { BookingSource.Staff, BookingSource.BookingCom, BookingSource.Airbnb })
+                {
+                    <option value="@s">@L[$"Source.{s}"]</option>
+                }
+            </select>
+        </div>
+    </section>
+
+    <section class="grid gap-5 rounded bg-white p-6 shadow-sm ring-1 ring-stone-200 sm:grid-cols-2">
+        <div>
+            <label asp-for="Input.Name" class="form-label"></label>
+            <input asp-for="Input.Name" class="form-input" />
+            <span asp-validation-for="Input.Name" class="form-error"></span>
+        </div>
+        <div>
+            <label asp-for="Input.Phone" class="form-label"></label>
+            <input asp-for="Input.Phone" type="tel" class="form-input" placeholder="+243 ..." />
+            <span asp-validation-for="Input.Phone" class="form-error"></span>
+        </div>
+        <div>
+            <label asp-for="Input.Email" class="form-label"></label>
+            <input asp-for="Input.Email" type="email" class="form-input" />
+            <span asp-validation-for="Input.Email" class="form-error"></span>
+        </div>
+        <div>
+            <label asp-for="Input.Language" class="form-label"></label>
+            <select asp-for="Input.Language" class="form-input">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        <div class="sm:col-span-2">
+            <label asp-for="Input.Notes" class="form-label"></label>
+            <textarea asp-for="Input.Notes" rows="3" class="form-input"></textarea>
+        </div>
+        <label class="flex items-center gap-2">
+            <input asp-for="Input.AlreadyPaid" class="h-4 w-4 accent-gold-600" />
+            @L["Admin.New.Paid"]
+        </label>
+    </section>
+
+    <button type="submit" class="btn-primary">@L["Admin.New.Submit"]</button>
+</form>
+
+<script>
+    // Only list rooms of the chosen type.
+    (() => {
+        const type = document.querySelector("[data-room-type]");
+        const room = document.querySelector("[data-room]");
+        const sync = () => {
+            [...room.options].forEach(o => { if (o.value) o.hidden = o.dataset.type !== type.value; });
+            if (room.selectedOptions[0]?.hidden) room.value = "";
+        };
+        type.addEventListener("change", sync);
+        sync();
+    })();
+</script>
+<script src="~/js/site.js" asp-append-version="true"></script>

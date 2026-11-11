@@ -1,75 +1,48 @@
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
-using RachelTower.Web.Infrastructure;
+using RachelTower.Web.Reservations;
 
 namespace RachelTower.Web.Pages;
 
-/// <summary>
-/// Step 1 booking page: collects dates and sends the request to the front desk on WhatsApp.
-/// Step 2 replaces this with the live booking engine (availability, mobile money, pay at the desk).
-/// </summary>
-public class BookModel(IOptions<HotelOptions> hotel, IStringLocalizer<SharedResource> L, TimeProvider clock) : PageModel
+/// <summary>Step 1 of booking: pick dates and see which rooms are free, with prices.</summary>
+public class BookModel(AvailabilityService availability, BookingService bookings, BookingText text, HotelClock clock) : PageModel
 {
-    [BindProperty]
-    public BookingRequest Input { get; set; } = new();
+    [BindProperty(SupportsGet = true)]
+    public DateOnly? CheckIn { get; set; }
 
-    public void OnGet()
+    [BindProperty(SupportsGet = true)]
+    public DateOnly? CheckOut { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public int Guests { get; set; } = 2;
+
+    /// <summary>Set when the details step sends the guest back (e.g. the room was just taken).</summary>
+    [TempData]
+    public string? Message { get; set; }
+
+    public string? SearchError { get; private set; }
+    public IReadOnlyList<RoomTypeAvailability>? Results { get; private set; }
+    public DateOnly Today { get; private set; }
+
+    public async Task OnGetAsync(CancellationToken ct)
     {
-        var today = Today;
-        Input.CheckIn = today.AddDays(1);
-        Input.CheckOut = today.AddDays(2);
-    }
+        Today = clock.Today;
+        Guests = Math.Clamp(Guests, 1, 10);
 
-    public IActionResult OnPost()
-    {
-        if (Input.CheckIn < Today)
+        if (CheckIn is null || CheckOut is null)
         {
-            ModelState.AddModelError("Input.CheckIn", L["Val.ArrivalInPast"]);
-        }
-        if (Input.CheckOut <= Input.CheckIn)
-        {
-            ModelState.AddModelError("Input.CheckOut", L["Val.DepartureAfterArrival"]);
-        }
-        if (!ModelState.IsValid)
-        {
-            return Page();
+            CheckIn ??= Today;
+            CheckOut ??= CheckIn.Value.AddDays(1);
+            return; // first visit: show the form only
         }
 
-        var culture = CultureInfo.CurrentUICulture;
-        var message = string.Format(
-            L["Book.WhatsAppMessage"],
-            Input.CheckIn.ToString("D", culture),
-            Input.CheckOut.ToString("D", culture),
-            Input.Guests,
-            Input.Name.Trim());
+        var error = bookings.ValidateStay(CheckIn.Value, CheckOut.Value);
+        if (error != BookingError.None)
+        {
+            SearchError = text.Error(error);
+            return;
+        }
 
-        return Redirect(hotel.Value.WhatsAppUrl(message));
-    }
-
-    // Kolwezi is UTC+2 all year.
-    private DateOnly Today => DateOnly.FromDateTime(clock.GetUtcNow().UtcDateTime.AddHours(2));
-
-    public sealed class BookingRequest
-    {
-        [Display(Name = "Book.CheckIn")]
-        [Required(ErrorMessage = "Val.Required")]
-        public DateOnly CheckIn { get; set; }
-
-        [Display(Name = "Book.CheckOut")]
-        [Required(ErrorMessage = "Val.Required")]
-        public DateOnly CheckOut { get; set; }
-
-        [Display(Name = "Book.Guests")]
-        [Range(1, 10, ErrorMessage = "Val.Range")]
-        public int Guests { get; set; } = 2;
-
-        [Display(Name = "Book.Name")]
-        [Required(ErrorMessage = "Val.Required")]
-        [StringLength(100, ErrorMessage = "Val.StringLength")]
-        public string Name { get; set; } = "";
+        Results = await availability.SearchAsync(CheckIn.Value, CheckOut.Value, ct);
     }
 }

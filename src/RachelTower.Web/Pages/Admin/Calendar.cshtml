@@ -1,0 +1,84 @@
+@page "/admin/calendar"
+@model RachelTower.Web.Pages.Admin.CalendarModel
+@{
+    ViewData["Title"] = L["Admin.Nav.Calendar"];
+    var ci = CultureInfo.CurrentCulture;
+    var nights = Model.Nights.ToList();
+    var last = nights[^1];
+}
+
+<div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+        <h1 class="font-display text-4xl font-semibold">@L["Admin.Nav.Calendar"]</h1>
+        <p class="mt-1 text-sm text-ink/60">@Model.From.ToString("d MMMM", ci) → @last.ToString("d MMMM yyyy", ci) · @L["Admin.Cal.Legend"]</p>
+    </div>
+    <nav class="flex gap-2 text-sm">
+        <a class="btn-outline py-2" href="/admin/calendar?start=@Model.From.AddDays(-CalendarModel.Days).ToString("yyyy-MM-dd")">← @L["Admin.Cal.Prev"]</a>
+        <a class="btn-outline py-2" href="/admin/calendar">@L["Admin.Cal.Today"]</a>
+        <a class="btn-outline py-2" href="/admin/calendar?start=@Model.From.AddDays(CalendarModel.Days).ToString("yyyy-MM-dd")">@L["Admin.Cal.Next"] →</a>
+    </nav>
+</div>
+
+<div class="mt-6 overflow-x-auto rounded bg-white shadow-sm ring-1 ring-stone-200">
+    <table class="w-full min-w-[60rem] table-fixed border-collapse text-xs">
+        <colgroup>
+            <col class="w-24" />
+            @foreach (var _ in nights) { <col /> }
+        </colgroup>
+        <thead>
+            <tr class="border-b border-stone-200">
+                <th class="sticky left-0 bg-white px-3 py-2 text-left font-medium text-ink/60">@L["Admin.Col.Room"]</th>
+                @foreach (var d in nights)
+                {
+                    var weekend = d.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
+                    <th class="px-1 py-2 text-center font-medium @(d == Model.Today ? "bg-gold-100 text-gold-700" : weekend ? "bg-stone-50 text-ink/70" : "text-ink/70")">
+                        <span class="block uppercase">@d.ToString("ddd", ci)</span>
+                        <span class="block text-sm text-ink">@d.Day</span>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.Rooms)
+            {
+                var bookings = Model.ByRoom.GetValueOrDefault(room.Id) ?? [];
+                <tr class="h-11 border-b border-stone-100 @(room.IsActive ? "" : "bg-stone-100 text-ink/40")">
+                    <th class="sticky left-0 bg-inherit px-3 text-left font-semibold" style="background: inherit">@room.Number</th>
+                    @{
+                        var day = Model.From;
+                        while (day <= last)
+                        {
+                            var b = bookings.FirstOrDefault(x => x.CheckIn <= day && x.CheckOut > day);
+                            if (b is null)
+                            {
+                                <td class="border-l border-stone-100 @(day == Model.Today ? "bg-gold-100/40" : "")"></td>
+                                day = day.AddDays(1);
+                            }
+                            else
+                            {
+                                var end = b.CheckOut.AddDays(-1) < last ? b.CheckOut.AddDays(-1) : last;
+                                var span = end.DayNumber - day.DayNumber + 1;
+                                <td colspan="@span" class="border-l border-stone-100 px-0.5 py-1">
+                                    <a href="/admin/bookings/@b.Id" title="@b.GuestName · @b.Reference · @L[$"Status.{b.Status}"]"
+                                       class="flex h-8 items-center gap-1 overflow-hidden rounded px-2 font-medium @AdminUi.BarClass(b.Status) hover:opacity-90">
+                                        <span class="truncate">@b.GuestName</span>
+                                        @if (b.PaymentStatus == PaymentStatus.Unpaid) { <span aria-hidden="true">·$</span> }
+                                    </a>
+                                </td>
+                                day = end.AddDays(1);
+                            }
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<ul class="mt-4 flex flex-wrap gap-4 text-xs text-ink/70">
+    @foreach (var s in new[] { BookingStatus.Confirmed, BookingStatus.CheckedIn, BookingStatus.CheckedOut, BookingStatus.PendingPayment })
+    {
+        <li class="flex items-center gap-1.5"><span class="inline-block h-3 w-5 rounded @AdminUi.BarClass(s)"></span>@L[$"Status.{s}"]</li>
+    }
+    <li>·$ = @L["PaymentStatus.Unpaid"]</li>
+</ul>

@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: rachel
+          POSTGRES_PASSWORD: rachel
+          POSTGRES_DB: racheltower
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rachel"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Test (against real PostgreSQL)
+        run: dotnet test --configuration Release --no-build
+        env:
+          TEST_DATABASE: Host=localhost;Port=5432;Database=racheltower_test;Username=rachel;Password=rachel

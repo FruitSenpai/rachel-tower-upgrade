@@ -20,6 +20,9 @@ public sealed class HotelOptions
     public string MapQuery { get; set; } = "";
     public string OpeningDate { get; set; } = "";
 
+    /// <summary>Language of booking notices sent to the hotel inbox.</summary>
+    public string StaffLanguage { get; set; } = "fr";
+
     public string WhatsAppUrl(string? message = null) =>
         $"https://wa.me/{WhatsApp}" + (string.IsNullOrWhiteSpace(message) ? "" : $"?text={Uri.EscapeDataString(message)}");
 

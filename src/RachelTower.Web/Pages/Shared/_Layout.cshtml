@@ -7,6 +7,18 @@
     var currentPage = ViewContext.RouteData.Values["page"] as string ?? "/Index";
     var localizedPage = SiteRoutes.Pages.ContainsKey(currentPage) ? currentPage : "/Index";
     var isLocalized = SiteRoutes.Pages.ContainsKey(currentPage);
+    var indexable = isLocalized && !SiteRoutes.NotIndexed.Contains(currentPage);
+
+    // Same page in the other language, keeping route values (e.g. a booking token) and the query string (e.g. dates).
+    var switchValues = new RouteValueDictionary();
+    foreach (var (key, value) in ViewContext.RouteData.Values)
+    {
+        if (key is not ("page" or "handler")) switchValues[key] = value;
+    }
+    switchValues["culture"] = other;
+    var switchUrl = isLocalized
+        ? (Url.Page(localizedPage, switchValues) ?? Url.PageIn("/Index", other)) + (Context.Request.Method == "GET" ? Context.Request.QueryString.Value : "")
+        : Url.PageIn("/Index", other);
 
     var nav = new (string Page, string Label)[]
     {
@@ -26,7 +38,11 @@
     <title>@ViewData["Title"]</title>
     <meta name="description" content="@ViewData["Description"]" />
     <meta name="theme-color" content="#1f1b16" />
-    @if (isLocalized)
+    @if (!indexable)
+    {
+        <meta name="robots" content="noindex" />
+    }
+    @if (indexable)
     {
         <link rel="canonical" href="@Url.AbsolutePageIn(currentPage, culture)" />
         @foreach (var c in SiteCultures.All)
@@ -72,7 +88,7 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="@Url.PageIn(localizedPage, other)" hreflang="@other" lang="@other" class="text-sm font-medium uppercase tracking-wider text-ink/70 hover:text-gold-600" aria-label="@L["Nav.SwitchLanguageLabel"]">@other</a>
+                <a href="@switchUrl" hreflang="@other" lang="@other" class="text-sm font-medium uppercase tracking-wider text-ink/70 hover:text-gold-600" aria-label="@L["Nav.SwitchLanguageLabel"]">@other</a>
                 <a href="@Url.PageIn("/Book")" class="btn-primary hidden sm:inline-flex">@L["Nav.Book"]</a>
                 <button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded border border-sand lg:hidden" aria-controls="mobile-nav" aria-expanded="false" data-nav-toggle>
                     <span class="sr-only">@L["Nav.Menu"]</span>

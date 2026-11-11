@@ -147,7 +147,7 @@
   <data name="Book.MetaDescription" xml:space="preserve"><value>Book your room at The Rachel Tower in Kolwezi by WhatsApp, phone, email or Airbnb.</value></data>
   <data name="Book.Eyebrow" xml:space="preserve"><value>Reservations</value></data>
   <data name="Book.Heading" xml:space="preserve"><value>Book a room</value></data>
-  <data name="Book.Intro" xml:space="preserve"><value>Tell us your dates and our team will confirm your room, usually within the hour. Online booking with instant confirmation, mobile money and pay at the desk is coming soon.</value></data>
+  <data name="Book.Intro" xml:space="preserve"><value>Choose your dates to see available rooms and prices. Book online in a minute and pay at the desk when you arrive.</value></data>
   <data name="Book.CheckIn" xml:space="preserve"><value>Arrival</value></data>
   <data name="Book.CheckOut" xml:space="preserve"><value>Departure</value></data>
   <data name="Book.Guests" xml:space="preserve"><value>Guests</value></data>
@@ -215,4 +215,174 @@ Name: {3}</value></data>
   <data name="Img.EventHall" xml:space="preserve"><value>Dining and event hall</value></data>
   <data name="Img.Fitness" xml:space="preserve"><value>Fitness room</value></data>
   <data name="Img.Kolwezi" xml:space="preserve"><value>Monument in Kolwezi</value></data>
+  <data name="Admin.Booking.Language" xml:space="preserve"><value>Guest's language</value></data>
+  <data name="Admin.ConfirmAction" xml:space="preserve"><value>Are you sure?</value></data>
+  <data name="Val.Phone" xml:space="preserve"><value>Please enter a valid phone number.</value></data>
+  <data name="Book.Search" xml:space="preserve"><value>Check availability</value></data>
+  <data name="Book.ResultsTitle" xml:space="preserve"><value>Rooms from {0} to {1}</value></data>
+  <data name="Book.PerNight" xml:space="preserve"><value>per night</value></data>
+  <data name="Book.TotalOneNight" xml:space="preserve"><value>Total for 1 night: {0}</value></data>
+  <data name="Book.TotalNights" xml:space="preserve"><value>Total for {1} nights: {0}</value></data>
+  <data name="Book.MaxGuests" xml:space="preserve"><value>Up to {0} guests</value></data>
+  <data name="Book.OneLeft" xml:space="preserve"><value>Only 1 room left</value></data>
+  <data name="Book.FewLeft" xml:space="preserve"><value>Only {0} rooms left</value></data>
+  <data name="Book.SoldOut" xml:space="preserve"><value>Fully booked for these dates</value></data>
+  <data name="Book.Select" xml:space="preserve"><value>Book this room</value></data>
+  <data name="Book.TooManyGuestsForType" xml:space="preserve"><value>This room takes up to {0} guests. For larger groups, book several rooms or contact us.</value></data>
+  <data name="Book.NothingAvailable" xml:space="preserve"><value>No rooms are available for these dates. Try other dates or contact us: we may still be able to help.</value></data>
+  <data name="Book.HelpTitle" xml:space="preserve"><value>Prefer to talk to us?</value></data>
+  <data name="Book.WhatsAppCta" xml:space="preserve"><value>Book on WhatsApp</value></data>
+  <data name="Err.InvalidDates" xml:space="preserve"><value>Departure must be after arrival.</value></data>
+  <data name="Err.ArrivalInPast" xml:space="preserve"><value>Arrival can't be in the past.</value></data>
+  <data name="Err.TooManyNights" xml:space="preserve"><value>Online bookings are limited to {0} nights. Contact us for longer stays.</value></data>
+  <data name="Err.TooFarAhead" xml:space="preserve"><value>Bookings open {0} days ahead.</value></data>
+  <data name="Err.TooManyGuests" xml:space="preserve"><value>Too many guests for this room.</value></data>
+  <data name="Err.UnknownRoomType" xml:space="preserve"><value>This room type is no longer available.</value></data>
+  <data name="Err.NoAvailability" xml:space="preserve"><value>Sorry, this room is no longer available for these dates. Please choose another room or other dates.</value></data>
+  <data name="Err.NotAllowed" xml:space="preserve"><value>This change isn't possible for this booking in its current status.</value></data>
+  <data name="Err.NotFound" xml:space="preserve"><value>Booking not found.</value></data>
+  <data name="Err.ConcurrencyConflict" xml:space="preserve"><value>Someone else changed this booking at the same time. Please reload and try again.</value></data>
+  <data name="Details.Title" xml:space="preserve"><value>Complete your booking | The Rachel Tower</value></data>
+  <data name="Details.Heading" xml:space="preserve"><value>Complete your booking</value></data>
+  <data name="Details.Summary" xml:space="preserve"><value>Your stay</value></data>
+  <data name="Details.YourDetails" xml:space="preserve"><value>Your details</value></data>
+  <data name="Details.Name" xml:space="preserve"><value>Full name</value></data>
+  <data name="Details.Phone" xml:space="preserve"><value>Phone / WhatsApp</value></data>
+  <data name="Details.Email" xml:space="preserve"><value>Email (optional, for your confirmation)</value></data>
+  <data name="Details.Notes" xml:space="preserve"><value>Special requests (optional)</value></data>
+  <data name="Details.NotesHint" xml:space="preserve"><value>Arrival time, airport pickup, etc.</value></data>
+  <data name="Details.PaymentTitle" xml:space="preserve"><value>Payment</value></data>
+  <data name="Details.Policy" xml:space="preserve"><value>Free cancellation until {0}. Unpaid bookings are held until {1} on your arrival day.</value></data>
+  <data name="Details.Confirm" xml:space="preserve"><value>Confirm booking</value></data>
+  <data name="Details.Back" xml:space="preserve"><value>Change dates</value></data>
+  <data name="Payment.PayAtDesk" xml:space="preserve"><value>Pay at the desk</value></data>
+  <data name="Payment.PayAtDeskText" xml:space="preserve"><value>Pay at reception when you arrive.</value></data>
+  <data name="Payment.MobileMoney" xml:space="preserve"><value>Mobile money</value></data>
+  <data name="Payment.MobileMoneyText" xml:space="preserve"><value>Orange Money, M-Pesa, Airtel Money. Coming soon.</value></data>
+  <data name="Manage.Title" xml:space="preserve"><value>Your booking {0} | The Rachel Tower</value></data>
+  <data name="Manage.Heading" xml:space="preserve"><value>Your booking</value></data>
+  <data name="Manage.Created" xml:space="preserve"><value>Your booking is confirmed! Keep this page: you can use it to view or cancel your booking.</value></data>
+  <data name="Manage.CreatedEmail" xml:space="preserve"><value>We have also sent the details to {0}.</value></data>
+  <data name="Manage.Cancelled" xml:space="preserve"><value>Your booking has been cancelled.</value></data>
+  <data name="Manage.CancelTitle" xml:space="preserve"><value>Need to cancel?</value></data>
+  <data name="Manage.CancelUntil" xml:space="preserve"><value>You can cancel free of charge until {0}.</value></data>
+  <data name="Manage.CancelCheck" xml:space="preserve"><value>Yes, I want to cancel this booking</value></data>
+  <data name="Manage.CancelButton" xml:space="preserve"><value>Cancel my booking</value></data>
+  <data name="Manage.CannotCancel" xml:space="preserve"><value>Online cancellation is closed for this booking. Please contact us to make changes.</value></data>
+  <data name="Manage.Contact" xml:space="preserve"><value>Questions? Call {0} or message us on</value></data>
+  <data name="Manage.Print" xml:space="preserve"><value>Print</value></data>
+  <data name="Booking.Reference" xml:space="preserve"><value>Booking reference</value></data>
+  <data name="Booking.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Booking.RoomType" xml:space="preserve"><value>Room</value></data>
+  <data name="Booking.Nights" xml:space="preserve"><value>Nights</value></data>
+  <data name="Booking.Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Booking.Payment" xml:space="preserve"><value>Payment</value></data>
+  <data name="Booking.Guest" xml:space="preserve"><value>Guest</value></data>
+  <data name="Booking.Phone" xml:space="preserve"><value>Phone</value></data>
+  <data name="Booking.Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Booking.Notes" xml:space="preserve"><value>Requests and notes</value></data>
+  <data name="Booking.PayAtDeskNote" xml:space="preserve"><value>Please pay at reception when you arrive. Unpaid bookings are held until {0} on your arrival day.</value></data>
+  <data name="Status.PendingPayment" xml:space="preserve"><value>Awaiting payment</value></data>
+  <data name="Status.Confirmed" xml:space="preserve"><value>Confirmed</value></data>
+  <data name="Status.CheckedIn" xml:space="preserve"><value>Checked in</value></data>
+  <data name="Status.CheckedOut" xml:space="preserve"><value>Checked out</value></data>
+  <data name="Status.Cancelled" xml:space="preserve"><value>Cancelled</value></data>
+  <data name="Status.NoShow" xml:space="preserve"><value>No-show</value></data>
+  <data name="Status.Expired" xml:space="preserve"><value>Expired</value></data>
+  <data name="PaymentStatus.Unpaid" xml:space="preserve"><value>not paid yet</value></data>
+  <data name="PaymentStatus.Paid" xml:space="preserve"><value>paid</value></data>
+  <data name="PaymentStatus.Refunded" xml:space="preserve"><value>refunded</value></data>
+  <data name="Source.Website" xml:space="preserve"><value>Website</value></data>
+  <data name="Source.Staff" xml:space="preserve"><value>Front desk</value></data>
+  <data name="Source.BookingCom" xml:space="preserve"><value>Booking.com</value></data>
+  <data name="Source.Airbnb" xml:space="preserve"><value>Airbnb</value></data>
+  <data name="Email.Greeting" xml:space="preserve"><value>Hello {0},</value></data>
+  <data name="Email.Confirm.Subject" xml:space="preserve"><value>Your booking at The Rachel Tower: {0}</value></data>
+  <data name="Email.Confirm.Intro" xml:space="preserve"><value>Thank you for booking with us. Here are your booking details.</value></data>
+  <data name="Email.Cancel.Subject" xml:space="preserve"><value>Booking cancelled: {0}</value></data>
+  <data name="Email.Cancel.Intro" xml:space="preserve"><value>Your booking has been cancelled. We hope to welcome you another time.</value></data>
+  <data name="Email.Staff.NewSubject" xml:space="preserve"><value>New booking {0}: {1}, {2} to {3}</value></data>
+  <data name="Email.Staff.NewIntro" xml:space="preserve"><value>A new booking was made on the website.</value></data>
+  <data name="Email.Staff.CancelSubject" xml:space="preserve"><value>Cancelled booking {0}: {1}</value></data>
+  <data name="Email.Staff.CancelIntro" xml:space="preserve"><value>The guest cancelled this booking online.</value></data>
+  <data name="Email.Manage" xml:space="preserve"><value>View or cancel your booking: {0}</value></data>
+  <data name="Admin.Title" xml:space="preserve"><value>Front desk</value></data>
+  <data name="Admin.Language" xml:space="preserve"><value>Français</value></data>
+  <data name="Admin.SignOut" xml:space="preserve"><value>Sign out</value></data>
+  <data name="Admin.Login.Title" xml:space="preserve"><value>Staff sign in</value></data>
+  <data name="Admin.Login.Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Admin.Login.Password" xml:space="preserve"><value>Password</value></data>
+  <data name="Admin.Login.Remember" xml:space="preserve"><value>Keep me signed in</value></data>
+  <data name="Admin.Login.Submit" xml:space="preserve"><value>Sign in</value></data>
+  <data name="Admin.Login.Failed" xml:space="preserve"><value>Wrong email or password.</value></data>
+  <data name="Admin.Login.LockedOut" xml:space="preserve"><value>Too many attempts. Try again in 15 minutes.</value></data>
+  <data name="Admin.Nav.Dashboard" xml:space="preserve"><value>Today</value></data>
+  <data name="Admin.Nav.Calendar" xml:space="preserve"><value>Calendar</value></data>
+  <data name="Admin.Nav.Bookings" xml:space="preserve"><value>Bookings</value></data>
+  <data name="Admin.Nav.New" xml:space="preserve"><value>New booking</value></data>
+  <data name="Admin.Nav.Rooms" xml:space="preserve"><value>Rooms &amp; rates</value></data>
+  <data name="Admin.Nav.Site" xml:space="preserve"><value>View website</value></data>
+  <data name="Admin.Arrivals" xml:space="preserve"><value>Arrivals today</value></data>
+  <data name="Admin.Departures" xml:space="preserve"><value>Departures today</value></data>
+  <data name="Admin.InHouse" xml:space="preserve"><value>In-house guests</value></data>
+  <data name="Admin.Occupancy" xml:space="preserve"><value>Rooms occupied tonight</value></data>
+  <data name="Admin.ToRelease" xml:space="preserve"><value>Unpaid, released at {0}</value></data>
+  <data name="Admin.None" xml:space="preserve"><value>Nothing to show.</value></data>
+  <data name="Admin.Saved" xml:space="preserve"><value>Saved.</value></data>
+  <data name="Admin.Back" xml:space="preserve"><value>Back</value></data>
+  <data name="Admin.Action.CheckIn" xml:space="preserve"><value>Check in</value></data>
+  <data name="Admin.Action.CheckOut" xml:space="preserve"><value>Check out</value></data>
+  <data name="Admin.Action.MarkPaid" xml:space="preserve"><value>Mark as paid</value></data>
+  <data name="Admin.Action.Cancel" xml:space="preserve"><value>Cancel booking</value></data>
+  <data name="Admin.Action.NoShow" xml:space="preserve"><value>Mark no-show</value></data>
+  <data name="Admin.Action.SaveNotes" xml:space="preserve"><value>Save notes</value></data>
+  <data name="Admin.Search" xml:space="preserve"><value>Name, phone or reference</value></data>
+  <data name="Admin.Filter.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Admin.Filter.Upcoming" xml:space="preserve"><value>Upcoming and in-house</value></data>
+  <data name="Admin.Filter.All" xml:space="preserve"><value>All</value></data>
+  <data name="Admin.Filter.From" xml:space="preserve"><value>From</value></data>
+  <data name="Admin.Filter.To" xml:space="preserve"><value>To</value></data>
+  <data name="Admin.Filter.Apply" xml:space="preserve"><value>Filter</value></data>
+  <data name="Admin.Col.Ref" xml:space="preserve"><value>Ref.</value></data>
+  <data name="Admin.Col.Guest" xml:space="preserve"><value>Guest</value></data>
+  <data name="Admin.Col.Room" xml:space="preserve"><value>Room</value></data>
+  <data name="Admin.Col.Dates" xml:space="preserve"><value>Dates</value></data>
+  <data name="Admin.Col.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Admin.Col.Payment" xml:space="preserve"><value>Payment</value></data>
+  <data name="Admin.Col.Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Admin.Col.Source" xml:space="preserve"><value>Via</value></data>
+  <data name="Admin.Results" xml:space="preserve"><value>{0} bookings</value></data>
+  <data name="Admin.Page" xml:space="preserve"><value>Page {0} of {1}</value></data>
+  <data name="Admin.Prev" xml:space="preserve"><value>Previous</value></data>
+  <data name="Admin.Next" xml:space="preserve"><value>Next</value></data>
+  <data name="Admin.Booking.Created" xml:space="preserve"><value>Booked on {0} via {1}</value></data>
+  <data name="Admin.Booking.ReleaseAt" xml:space="preserve"><value>If unpaid and the guest hasn't arrived, released automatically at {0}.</value></data>
+  <data name="Admin.Booking.GuestLink" xml:space="preserve"><value>Guest's booking page</value></data>
+  <data name="Admin.Booking.Rate" xml:space="preserve"><value>{0} per night</value></data>
+  <data name="Admin.New.Title" xml:space="preserve"><value>New booking</value></data>
+  <data name="Admin.New.Intro" xml:space="preserve"><value>For phone, WhatsApp and walk-in bookings.</value></data>
+  <data name="Admin.New.RoomType" xml:space="preserve"><value>Room type</value></data>
+  <data name="Admin.New.Room" xml:space="preserve"><value>Room</value></data>
+  <data name="Admin.New.AnyRoom" xml:space="preserve"><value>First available</value></data>
+  <data name="Admin.New.Paid" xml:space="preserve"><value>Already paid</value></data>
+  <data name="Admin.New.Source" xml:space="preserve"><value>Booked via</value></data>
+  <data name="Admin.New.Submit" xml:space="preserve"><value>Create booking</value></data>
+  <data name="Admin.New.Created" xml:space="preserve"><value>Booking {0} created.</value></data>
+  <data name="Admin.Rooms.Types" xml:space="preserve"><value>Room types and rates</value></data>
+  <data name="Admin.Rooms.NameEn" xml:space="preserve"><value>Name (English)</value></data>
+  <data name="Admin.Rooms.NameFr" xml:space="preserve"><value>Name (French)</value></data>
+  <data name="Admin.Rooms.DescEn" xml:space="preserve"><value>Description (English)</value></data>
+  <data name="Admin.Rooms.DescFr" xml:space="preserve"><value>Description (French)</value></data>
+  <data name="Admin.Rooms.Rate" xml:space="preserve"><value>Nightly rate (USD)</value></data>
+  <data name="Admin.Rooms.MaxGuests" xml:space="preserve"><value>Max guests</value></data>
+  <data name="Admin.Rooms.RateNote" xml:space="preserve"><value>New rates apply to new bookings only.</value></data>
+  <data name="Admin.Rooms.Rooms" xml:space="preserve"><value>Rooms</value></data>
+  <data name="Admin.Rooms.Number" xml:space="preserve"><value>Room number</value></data>
+  <data name="Admin.Rooms.Active" xml:space="preserve"><value>Open for booking</value></data>
+  <data name="Admin.Rooms.Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Admin.Rooms.DuplicateNumber" xml:space="preserve"><value>Room numbers must be unique.</value></data>
+  <data name="Admin.Cal.Prev" xml:space="preserve"><value>Previous 2 weeks</value></data>
+  <data name="Admin.Cal.Next" xml:space="preserve"><value>Next 2 weeks</value></data>
+  <data name="Admin.Cal.Today" xml:space="preserve"><value>Today</value></data>
+  <data name="Admin.Cal.Legend" xml:space="preserve"><value>Click a booking to open it.</value></data>
 </root>

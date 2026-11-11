@@ -1,66 +1,115 @@
 @page
 @model BookModel
+@using System.Globalization
+@using RachelTower.Web.Reservations
 @{
     ViewData["Title"] = L["Book.Title"];
     ViewData["Description"] = L["Book.MetaDescription"];
     var hotel = HotelSettings.Value;
+    var culture = SiteCultures.Current;
+    var ci = CultureInfo.CurrentCulture;
 }
 
 <partial name="_PageHeader" model='new PageHeaderModel(L["Book.Eyebrow"], L["Book.Heading"], SiteImages.Bedroom)' />
 
-<section class="mx-auto grid max-w-7xl gap-14 px-5 py-20 lg:grid-cols-[1.4fr_1fr] lg:gap-20 lg:px-8 lg:py-24">
-    <div>
-        <p class="text-lg leading-relaxed text-ink/80">@L["Book.Intro"]</p>
+<section class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-20">
+    <p class="max-w-3xl text-lg leading-relaxed text-ink/80">@L["Book.Intro"]</p>
 
-        <form method="post" class="mt-10 rounded-sm bg-white p-6 shadow-sm ring-1 ring-sand sm:p-8" novalidate>
-            @if (!ViewData.ModelState.IsValid)
+    @if (Model.Message is not null)
+    {
+        <p class="mt-6 rounded-sm border border-amber-200 bg-amber-50 p-4 text-amber-900" role="alert">@Model.Message</p>
+    }
+
+    <form method="get" class="mt-8 grid gap-4 rounded-sm bg-white p-6 shadow-sm ring-1 ring-sand sm:grid-cols-2 lg:grid-cols-[1fr_1fr_10rem_auto] lg:items-end" data-stay-form>
+        <div>
+            <label for="CheckIn" class="form-label">@L["Book.CheckIn"]</label>
+            <input id="CheckIn" name="CheckIn" type="date" class="form-input" value="@Model.CheckIn?.ToString("yyyy-MM-dd")" min="@Model.Today.ToString("yyyy-MM-dd")" required data-checkin />
+        </div>
+        <div>
+            <label for="CheckOut" class="form-label">@L["Book.CheckOut"]</label>
+            <input id="CheckOut" name="CheckOut" type="date" class="form-input" value="@Model.CheckOut?.ToString("yyyy-MM-dd")" required data-checkout />
+        </div>
+        <div>
+            <label for="Guests" class="form-label">@L["Book.Guests"]</label>
+            <input id="Guests" name="Guests" type="number" min="1" max="10" class="form-input" value="@Model.Guests" />
+        </div>
+        <button type="submit" class="btn-primary justify-center">@L["Book.Search"]</button>
+    </form>
+
+    @if (Model.SearchError is not null)
+    {
+        <p class="mt-6 rounded-sm border border-red-200 bg-red-50 p-4 text-red-900" role="alert">@Model.SearchError</p>
+    }
+
+    @if (Model.Results is { } results)
+    {
+        <h2 class="mt-14 font-display text-3xl font-semibold sm:text-4xl">
+            @string.Format(L["Book.ResultsTitle"], Model.CheckIn!.Value.ToString("D", ci), Model.CheckOut!.Value.ToString("D", ci))
+        </h2>
+
+        @if (!results.Any(r => r.IsAvailable))
+        {
+            <p class="mt-6 rounded-sm border border-amber-200 bg-amber-50 p-4 text-amber-900">@L["Book.NothingAvailable"]</p>
+        }
+
+        <div class="mt-8 grid gap-8 lg:grid-cols-2">
+            @foreach (var r in results)
             {
-                <p class="mb-5 rounded-sm border border-red-200 bg-red-50 p-3 text-sm text-red-900" role="alert">@L["Val.Summary"]</p>
+                var type = r.RoomType;
+                var image = SiteImages.ByKey(type.ImageKey);
+                var fits = Model.Guests <= type.MaxGuests;
+                <article class="flex flex-col overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-sand @(r.IsAvailable ? "" : "opacity-70")">
+                    <img src="@Images.Src(image, 1000)" alt="@type.Name(culture)" loading="lazy" class="aspect-[16/9] w-full object-cover" />
+                    <div class="flex flex-1 flex-col p-6 sm:p-8">
+                        <div class="flex flex-wrap items-baseline justify-between gap-3">
+                            <h3 class="font-display text-3xl font-semibold">@type.Name(culture)</h3>
+                            <p><span class="font-display text-3xl font-semibold">@Money.Usd(type.NightlyRateUsd, ci)</span> <span class="text-sm text-ink/60">@L["Book.PerNight"]</span></p>
+                        </div>
+                        <p class="mt-1 text-sm text-ink/60">@string.Format(L["Book.MaxGuests"], type.MaxGuests)</p>
+                        <p class="mt-4 leading-relaxed text-ink/80">@type.Description(culture)</p>
+
+                        <div class="mt-auto pt-6">
+                            @if (!r.IsAvailable)
+                            {
+                                <p class="font-medium text-ink/70">@L["Book.SoldOut"]</p>
+                            }
+                            else if (!fits)
+                            {
+                                <p class="text-ink/70">@string.Format(L["Book.TooManyGuestsForType"], type.MaxGuests)</p>
+                            }
+                            else
+                            {
+                                <p class="text-ink/80">
+                                    @(r.Nights == 1 ? string.Format(L["Book.TotalOneNight"], Money.Usd(r.TotalUsd, ci)) : string.Format(L["Book.TotalNights"], Money.Usd(r.TotalUsd, ci), r.Nights))
+                                </p>
+                                @if (r.AvailableRooms <= 2)
+                                {
+                                    <p class="mt-1 text-sm font-medium text-gold-700">@(r.AvailableRooms == 1 ? L["Book.OneLeft"] : string.Format(L["Book.FewLeft"], r.AvailableRooms))</p>
+                                }
+                                <a href="@Url.PageIn("/BookDetails", values: new { type = type.Code, checkIn = Model.CheckIn.Value.ToString("yyyy-MM-dd"), checkOut = Model.CheckOut.Value.ToString("yyyy-MM-dd"), guests = Model.Guests })"
+                                   class="btn-primary mt-4">@L["Book.Select"]</a>
+                            }
+                        </div>
+                    </div>
+                </article>
             }
-            <div class="grid gap-5 sm:grid-cols-2">
-                <div>
-                    <label asp-for="Input.CheckIn" class="form-label"></label>
-                    <input asp-for="Input.CheckIn" type="date" class="form-input" required data-checkin />
-                    <span asp-validation-for="Input.CheckIn" class="form-error"></span>
-                </div>
-                <div>
-                    <label asp-for="Input.CheckOut" class="form-label"></label>
-                    <input asp-for="Input.CheckOut" type="date" class="form-input" required data-checkout />
-                    <span asp-validation-for="Input.CheckOut" class="form-error"></span>
-                </div>
-                <div>
-                    <label asp-for="Input.Guests" class="form-label"></label>
-                    <input asp-for="Input.Guests" type="number" min="1" max="10" class="form-input" />
-                    <span asp-validation-for="Input.Guests" class="form-error"></span>
-                </div>
-                <div>
-                    <label asp-for="Input.Name" class="form-label"></label>
-                    <input asp-for="Input.Name" class="form-input" autocomplete="name" required />
-                    <span asp-validation-for="Input.Name" class="form-error"></span>
-                </div>
-            </div>
-            <button type="submit" class="btn-primary mt-7 w-full justify-center sm:w-auto">@L["Book.Submit"]</button>
-        </form>
+        </div>
+    }
+</section>
+
+<section class="bg-white">
+    <div class="mx-auto grid max-w-7xl gap-8 px-5 py-14 md:grid-cols-[1fr_auto] md:items-center lg:px-8">
+        <div>
+            <h2 class="font-display text-3xl font-semibold">@L["Book.HelpTitle"]</h2>
+            <ul class="mt-4 flex flex-wrap gap-x-8 gap-y-2 text-ink/80">
+                @foreach (var phone in hotel.Phones)
+                {
+                    <li>@L["Book.CallUs"] <a class="link-plain" href="@HotelOptions.TelUrl(phone)">@phone</a></li>
+                }
+                <li>@L["Book.EmailUs"] <a class="link-plain" href="mailto:@hotel.Email">@hotel.Email</a></li>
+                <li><a class="link-plain" href="@hotel.AirbnbUrl" target="_blank" rel="noopener">@L["Book.Airbnb"]</a></li>
+            </ul>
+        </div>
+        <a href="@hotel.WhatsAppUrl(L["WhatsApp.Greeting"])" target="_blank" rel="noopener" class="btn-outline justify-center">@L["Book.WhatsAppCta"]</a>
     </div>
-
-    <aside>
-        <h2 class="font-display text-3xl font-semibold">@L["Book.OtherWays"]</h2>
-        <ul class="mt-6 divide-y divide-sand border-y border-sand">
-            @foreach (var phone in hotel.Phones)
-            {
-                <li class="flex items-center justify-between py-4">
-                    <span class="text-ink/70">@L["Book.CallUs"]</span>
-                    <a class="link-plain font-medium" href="@HotelOptions.TelUrl(phone)">@phone</a>
-                </li>
-            }
-            <li class="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                <span class="text-ink/70">@L["Book.EmailUs"]</span>
-                <a class="link-plain break-all font-medium" href="mailto:@hotel.Email">@hotel.Email</a>
-            </li>
-            <li class="py-4">
-                <a class="link-arrow" href="@hotel.AirbnbUrl" target="_blank" rel="noopener">@L["Book.Airbnb"]</a>
-            </li>
-        </ul>
-        <img src="@Images.Src(SiteImages.Linen, 800)" alt="@L[SiteImages.Linen.AltKey]" loading="lazy" class="mt-8 aspect-[4/3] w-full rounded-sm object-cover" />
-    </aside>
 </section>

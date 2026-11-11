@@ -20,5 +20,10 @@ public static class SiteRoutes
         ["/Events"] = new("meetings-and-events", "reunions-et-evenements"),
         ["/Book"] = new("book", "reserver"),
         ["/Contact"] = new("contact", "contact"),
+        ["/BookDetails"] = new("book/details", "reserver/details"),
+        ["/ManageBooking"] = new("booking/{token}", "reservation/{token}"),
     };
+
+    /// <summary>Pages kept out of the sitemap and search results (booking steps, private booking pages).</summary>
+    public static readonly ISet<string> NotIndexed = new HashSet<string> { "/BookDetails", "/ManageBooking" };
 }

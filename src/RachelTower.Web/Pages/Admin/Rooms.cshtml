@@ -1,0 +1,83 @@
+@page "/admin/rooms"
+@model RachelTower.Web.Pages.Admin.RoomsModel
+@{
+    ViewData["Title"] = L["Admin.Nav.Rooms"];
+    var allRooms = Model.RoomTypes.SelectMany(t => t.Rooms.Select(r => (Type: t, Room: r))).ToList();
+}
+
+<h1 class="font-display text-4xl font-semibold">@L["Admin.Nav.Rooms"]</h1>
+
+<h2 class="mt-8 text-lg font-semibold">@L["Admin.Rooms.Types"]</h2>
+<p class="text-sm text-ink/60">@L["Admin.Rooms.RateNote"]</p>
+
+<div class="mt-4 grid gap-6 lg:grid-cols-2">
+    @foreach (var t in Model.RoomTypes)
+    {
+        <form method="post" asp-page-handler="Type" class="space-y-4 rounded bg-white p-6 shadow-sm ring-1 ring-stone-200">
+            <input type="hidden" name="Id" value="@t.Id" />
+            <div class="flex items-center justify-between">
+                <h3 class="font-display text-2xl font-semibold">@t.Name(SiteCultures.Current)</h3>
+                <span class="text-sm text-ink/60">@t.Rooms.Count(r => r.IsActive) / @t.Rooms.Count</span>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                    <label class="form-label" for="rate-@t.Id">@L["Admin.Rooms.Rate"]</label>
+                    <input id="rate-@t.Id" name="Rate" type="number" min="0" step="0.01" value="@t.NightlyRateUsd.ToString(CultureInfo.InvariantCulture)" class="form-input" required />
+                </div>
+                <div>
+                    <label class="form-label" for="max-@t.Id">@L["Admin.Rooms.MaxGuests"]</label>
+                    <input id="max-@t.Id" name="MaxGuests" type="number" min="1" max="10" value="@t.MaxGuests" class="form-input" required />
+                </div>
+                <div>
+                    <label class="form-label" for="nen-@t.Id">@L["Admin.Rooms.NameEn"]</label>
+                    <input id="nen-@t.Id" name="NameEn" value="@t.NameEn" class="form-input" required maxlength="80" />
+                </div>
+                <div>
+                    <label class="form-label" for="nfr-@t.Id">@L["Admin.Rooms.NameFr"]</label>
+                    <input id="nfr-@t.Id" name="NameFr" value="@t.NameFr" class="form-input" required maxlength="80" />
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="form-label" for="den-@t.Id">@L["Admin.Rooms.DescEn"]</label>
+                    <textarea id="den-@t.Id" name="DescriptionEn" rows="3" class="form-input" maxlength="1000">@t.DescriptionEn</textarea>
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="form-label" for="dfr-@t.Id">@L["Admin.Rooms.DescFr"]</label>
+                    <textarea id="dfr-@t.Id" name="DescriptionFr" rows="3" class="form-input" maxlength="1000">@t.DescriptionFr</textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary py-2.5">@L["Admin.Rooms.Save"]</button>
+        </form>
+    }
+</div>
+
+<h2 class="mt-10 text-lg font-semibold">@L["Admin.Rooms.Rooms"]</h2>
+<form method="post" asp-page-handler="Rooms" class="mt-4 max-w-2xl rounded bg-white shadow-sm ring-1 ring-stone-200">
+    <table class="w-full text-left text-sm">
+        <thead class="border-b border-stone-200 bg-stone-50 text-xs uppercase tracking-wide text-ink/60">
+            <tr>
+                <th class="px-4 py-3 font-medium">@L["Admin.Rooms.Number"]</th>
+                <th class="px-4 py-3 font-medium">@L["Admin.New.RoomType"]</th>
+                <th class="px-4 py-3 font-medium">@L["Admin.Rooms.Active"]</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-stone-100">
+            @for (var i = 0; i < allRooms.Count; i++)
+            {
+                var (type, room) = allRooms[i];
+                <tr>
+                    <td class="px-4 py-2">
+                        <input type="hidden" name="rooms[@i].Id" value="@room.Id" />
+                        <input name="rooms[@i].Number" value="@room.Number" class="form-input py-2" required maxlength="20" aria-label="@L["Admin.Rooms.Number"]" />
+                    </td>
+                    <td class="px-4 py-2 text-ink/70">@type.Name(SiteCultures.Current)</td>
+                    <td class="px-4 py-2">
+                        <input type="checkbox" name="rooms[@i].IsActive" value="true" checked="@room.IsActive" class="h-4 w-4 accent-gold-600" aria-label="@L["Admin.Rooms.Active"]" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="border-t border-stone-100 p-4">
+        <button type="submit" class="btn-primary py-2.5">@L["Admin.Rooms.Save"]</button>
+    </div>
+</form>
