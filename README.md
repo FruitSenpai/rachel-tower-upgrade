@@ -9,7 +9,7 @@ Requirements: [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) a
 The easiest way to get PostgreSQL is Docker:
 
 ```bash
-docker compose up -d          # PostgreSQL on localhost:5432 (user/password: rachel)
+docker compose up -d          
 cd src/RachelTower.Web
 dotnet run
 ```
@@ -18,8 +18,7 @@ Open http://localhost:5080. `/` redirects to `/en` or `/fr` based on the browser
 On startup the app creates the database tables and the starting data (5 VIP rooms at 150 USD,
 3 Standard rooms at 130 USD) if they don't exist yet.
 
-**Staff admin:** http://localhost:5080/admin. In development the first account is
-`admin@theracheltower.com` / `ChangeMe-Dev-123` (from `appsettings.Development.json`).
+**Staff admin:** http://localhost:5080/admin. 
 
 ### First-time setup
 
